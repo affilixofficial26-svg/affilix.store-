@@ -8,6 +8,7 @@ import {
   BrainCircuit,
   BriefcaseBusiness,
   DownloadCloud,
+  Images,
   FileArchive,
   GitCompareArrows,
   Handshake,
@@ -59,6 +60,7 @@ const sections = [
     items: [
       { label: "Automatizaciones", href: "/dashboard/automation", icon: Workflow, help: "Cron jobs, tareas y flujos." },
       { label: "Agentes IA", href: "/dashboard/agents", icon: BrainCircuit, help: "Control de agentes, permisos y logs." },
+      { label: "Media Studio", href: "/dashboard/media-studio", icon: Images, help: "Generacion multimedia con MuAPI." },
       { label: "Configuracion", href: "/dashboard/settings", icon: Settings, help: "Marca, pagos, IA, seguridad y webhooks." },
       { label: "Logs del Sistema", href: "/dashboard/logs", icon: ScrollText, help: "Errores, acciones y trazabilidad." },
     ],
