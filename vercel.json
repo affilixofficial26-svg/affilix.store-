@@ -1,7 +1,6 @@
 {
   "framework": "nextjs",
   "crons": [
-    { "path": "/api/internal/muapi/poll-pending", "schedule": "5 9 * * *" },
     { "path": "/api/internal/muapi/sync-models", "schedule": "0 3 1 * *" },
     { "path": "/api/internal/muapi/balance-alert", "schedule": "0 9 * * *" },
     { "path": "/api/automation/due", "schedule": "0 9 * * *" },

@@ -1,11 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import { requireAdminOrCron } from "@/lib/server-auth";
+import { isAdminRequest, requireInternal } from "@/lib/server-auth";
 import { syncModelCatalog } from "@/lib/muapi/client";
 
 export const dynamic = "force-dynamic";
 
 export async function POST(req: NextRequest) {
-  const denied = requireAdminOrCron(req);
+  const denied = isAdminRequest(req) ? null : await requireInternal(req);
   if (denied) return denied;
 
   try {

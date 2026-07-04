@@ -1,5 +1,6 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
+import { isTrustedInternalRequest } from "@/lib/qstash/verify";
 
 export function isAdminRequest(req: NextRequest) {
   return req.cookies.get("affilix_admin")?.value === "true";
@@ -17,6 +18,11 @@ export function requireAdmin(req: NextRequest) {
 
 export function requireCron(req: NextRequest) {
   if (isCronRequest(req)) return null;
+  return NextResponse.json({ error: "No autorizado." }, { status: 401 });
+}
+
+export async function requireInternal(req: NextRequest) {
+  if (await isTrustedInternalRequest(req)) return null;
   return NextResponse.json({ error: "No autorizado." }, { status: 401 });
 }
 
