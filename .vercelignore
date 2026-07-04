@@ -1,0 +1,23 @@
+node_modules
+.next
+.next-check
+.next-dev-affiliate
+.next-store-verify
+.next-agent-check
+.next-bad-*
+dist
+output
+desktop/bin
+desktop/obj
+FOTO DE PRODUCTO
+*.log
+*.err.log
+*.zip
+a8f1b502-1013-4696-99d2-f196da09106f.png
+logo de tienda online.png
+logo de tienda online SIN FONDO.png
+tsconfig.tsbuildinfo
+affilix-completo.html
+preview.html
+login-preview.html
+LOGO.png

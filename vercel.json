@@ -1,0 +1,8 @@
+{
+  "framework": "nextjs",
+  "crons": [
+    { "path": "/api/automation/due", "schedule": "0 9 * * *" },
+    { "path": "/api/automation/cron-daily-report", "schedule": "15 8 * * *" },
+    { "path": "/api/automation/cron-marketing", "schedule": "0 10 * * *" }
+  ]
+}

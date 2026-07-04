@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 360">
+  <defs>
+    <linearGradient id="gold" x1="244" x2="382" y1="172" y2="36" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#8b6117"/>
+      <stop offset="0.5" stop-color="#f5c75d"/>
+      <stop offset="1" stop-color="#ffe69a"/>
+    </linearGradient>
+    <linearGradient id="silver" x1="430" x2="560" y1="50" y2="188" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#f7f7f7"/>
+      <stop offset="0.48" stop-color="#a9a9a9"/>
+      <stop offset="1" stop-color="#2e2e2e"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="10" stdDeviation="8" flood-color="#000" flood-opacity="0.65"/>
+    </filter>
+  </defs>
+  <rect width="820" height="360" fill="#0b0b10"/>
+  <g filter="url(#shadow)">
+    <path d="M316 184 384 34h50L360 184h-44Z" fill="url(#gold)" stroke="#f6d785" stroke-width="2"/>
+    <path d="M406 184 445 104h43l-39 80h-43Z" fill="url(#gold)" stroke="#d6a333" stroke-width="2"/>
+    <path d="M420 143 442 104h82l23 39H420Z" fill="url(#silver)" stroke="#ededed" stroke-width="2"/>
+    <path d="M485 65 566 184h-47L463 97 485 65Z" fill="url(#silver)" stroke="#ededed" stroke-width="2"/>
+  </g>
+  <g font-family="Arial, sans-serif" font-weight="800" letter-spacing="24" font-size="78">
+    <text x="68" y="276" fill="#d8d8dc">AFFILI</text>
+    <text x="650" y="276" fill="#d6a12c">X</text>
+  </g>
+  <g fill="#b98222" font-family="monospace" font-size="16" letter-spacing="6">
+    <rect x="92" y="322" width="82" height="2"/>
+    <text x="220" y="329">TIENDA DE VENTA AUTOMATIZADA</text>
+    <rect x="680" y="322" width="82" height="2"/>
+  </g>
+</svg>

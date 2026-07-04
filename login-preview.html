@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AFFILIX - Login Administrador</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#070711;--surface:#0f0f1a;--border:rgba(255,255,255,.08);--gold:#f5a623;--text:#f0f0fa;--muted:#8888aa;--red:#ef4444}
+    *{box-sizing:border-box}body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--bg);color:var(--text);font-family:"DM Sans",sans-serif;padding:20px}
+    form{width:100%;max-width:420px;background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:26px;box-shadow:0 20px 60px rgba(0,0,0,.35)}
+    .brand{font-family:Syne,sans-serif;font-size:34px;font-weight:800;color:var(--gold)}h1{font-family:Syne,sans-serif;margin:24px 0 6px}p{color:var(--muted);line-height:1.6}
+    input,button{width:100%;height:44px;border-radius:10px;font:inherit}input{margin-top:12px;background:#1a1a2e;border:1px solid var(--border);color:var(--text);padding:0 13px}button{margin-top:16px;border:0;background:linear-gradient(135deg,var(--gold),#c4821a);color:#070711;font-weight:800;cursor:pointer}
+    .error{display:none;margin-top:12px;color:var(--red);font-weight:700}
+  </style>
+  <style>
+    html,body{overflow-x:hidden;overscroll-behavior-x:none;-webkit-tap-highlight-color:transparent}
+    input,button{min-height:46px;font-size:16px;touch-action:manipulation}
+    @media(max-width:520px){
+      body{align-items:stretch;padding:14px;background:#05050d}
+      form{max-width:none;margin:auto;border-radius:18px;padding:22px}
+      .brand{font-size:30px}h1{font-size:clamp(28px,8vw,36px);line-height:1.08}
+      button{height:auto;padding:12px}
+    }
+  </style>
+</head>
+<body>
+  <form id="login">
+    <div class="brand">AFFILIX</div>
+    <h1>Acceso administrador</h1>
+    <p>Usa el correo y contraseña de administrador para entrar al panel.</p>
+    <input id="email" type="email" placeholder="Correo administrador" required>
+    <input id="password" type="password" placeholder="Contraseña" required>
+    <button type="submit">Entrar como administrador</button>
+    <div id="error" class="error">Credenciales incorrectas.</div>
+  </form>
+  <script>
+    document.getElementById("login").addEventListener("submit", function(event) {
+      event.preventDefault();
+      const email = document.getElementById("email").value.trim().toLowerCase();
+      const password = document.getElementById("password").value;
+      if (email === "yankyfilms@gmail.com" && password === "QWERTY09@") {
+        sessionStorage.setItem("affilix_admin", "true");
+        location.href = "/affilix-completo.html";
+        return;
+      }
+      document.getElementById("error").style.display = "block";
+    });
+  </script>
+</body>
+</html>

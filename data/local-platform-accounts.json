@@ -1,0 +1,54 @@
+[
+  {
+    "platform": "clickbank",
+    "connected": true,
+    "connection_method": "external_login",
+    "signup_url": "https://accounts.clickbank.com/signup/",
+    "credentials": {
+      "primary_key": "",
+      "secondary_key": ""
+    },
+    "last_test_status": "success",
+    "last_test_message": "Registro/login abierto desde AFFILIX. Plataforma guardada como conectada en el panel local.",
+    "updated_at": "2026-05-31T13:41:56.317Z"
+  },
+  {
+    "platform": "cjdrop",
+    "connected": true,
+    "connection_method": "external_login",
+    "signup_url": "https://cjdropshipping.com/",
+    "credentials": {
+      "primary_key": "",
+      "secondary_key": ""
+    },
+    "last_test_status": "success",
+    "last_test_message": "Registro/login abierto desde AFFILIX. Plataforma guardada como conectada en el panel local.",
+    "updated_at": "2026-05-31T13:38:47.673Z"
+  },
+  {
+    "platform": "spocket",
+    "connected": true,
+    "connection_method": "external_login",
+    "signup_url": "https://www.spocket.co/",
+    "credentials": {
+      "primary_key": "",
+      "secondary_key": ""
+    },
+    "last_test_status": "success",
+    "last_test_message": "Registro/login abierto desde AFFILIX. Plataforma guardada como conectada en el panel local.",
+    "updated_at": "2026-05-31T13:38:39.278Z"
+  },
+  {
+    "platform": "amazon",
+    "connected": true,
+    "connection_method": "external_login",
+    "signup_url": "https://affiliate-program.amazon.com",
+    "credentials": {
+      "primary_key": "",
+      "secondary_key": ""
+    },
+    "last_test_status": "success",
+    "last_test_message": "Registro/login abierto desde AFFILIX. Plataforma guardada como conectada en el panel local.",
+    "updated_at": "2026-05-31T12:06:05.044Z"
+  }
+]

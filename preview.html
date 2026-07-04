@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AFFILIX - Vista sin login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <style>
+    :root{--bg:#070711;--surface:#0f0f1a;--elev:#161625;--border:rgba(255,255,255,.06);--gold:#f5a623;--green:#22c55e;--blue:#4f7cf5;--purple:#8b5cf6;--text:#f0f0fa;--muted:#8888aa}
+    *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:"DM Sans",sans-serif}
+    .shell{display:grid;grid-template-columns:260px 1fr;min-height:100vh}.side{background:linear-gradient(180deg,#0a0a18,#070711);border-right:1px solid var(--border);padding:20px}
+    .brand{font-family:Syne,sans-serif;font-size:30px;font-weight:800;color:var(--gold);margin-bottom:4px}.ver{font:11px "JetBrains Mono";color:var(--muted);margin-bottom:28px}
+    .nav h4{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:#555570;margin:24px 0 8px}.nav a{display:block;padding:11px 12px;border-radius:12px;color:var(--muted);font-weight:700;text-decoration:none}.nav a:hover,.nav a.active{background:rgba(245,166,35,.12);color:var(--gold)}
+    .agent{margin-top:28px;border:1px solid rgba(139,92,246,.25);background:rgba(139,92,246,.08);border-radius:16px;padding:14px;color:var(--muted);font-size:12px}.dot{display:inline-block;width:8px;height:8px;background:var(--green);border-radius:50%;margin-right:8px}
+    .top{height:64px;border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px;background:rgba(7,7,17,.82);backdrop-filter:blur(18px)}.search{margin-left:auto;background:#1a1a2e;border:1px solid var(--border);border-radius:10px;color:var(--text);height:40px;width:360px;padding:0 14px}
+    main{padding:26px}.title{font-family:Syne,sans-serif;font-size:34px;font-weight:800;margin:0}.sub{color:var(--muted);margin:6px 0 24px}.grid{display:grid;gap:16px}.kpis{grid-template-columns:repeat(4,1fr)}.card{background:rgba(15,15,26,.9);border:1px solid var(--border);border-radius:16px;padding:20px;backdrop-filter:blur(16px)}
+    .label{font-size:12px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);font-weight:800}.num{font:30px "JetBrains Mono";margin-top:14px}.gold{color:var(--gold)}.green{color:var(--green)}.blue{color:var(--blue)}.purple{color:var(--purple)}
+    .bars{height:46px;display:flex;align-items:end;gap:5px;margin-top:18px}.bars span{flex:1;background:var(--gold);border-radius:4px 4px 0 0;opacity:.7}
+    .two{grid-template-columns:2fr 1fr;margin-top:16px}.chart{height:240px;display:flex;align-items:end;gap:10px}.chart span{flex:1;background:linear-gradient(180deg,var(--gold),rgba(245,166,35,.12));border-radius:8px 8px 0 0}
+    table{width:100%;border-collapse:collapse;margin-top:10px}th,td{text-align:left;border-top:1px solid var(--border);padding:13px;font-size:14px}th{color:#555570;text-transform:uppercase;font-size:11px;letter-spacing:.1em}.chip{font:11px "JetBrains Mono";color:var(--gold)}
+    .notice{margin-bottom:20px;border:1px solid rgba(34,197,94,.25);background:rgba(34,197,94,.08);border-radius:14px;padding:14px;color:var(--green);font-weight:800}
+    @media(max-width:900px){.shell{grid-template-columns:1fr}.side{position:static}.kpis,.two{grid-template-columns:1fr}.search{display:none}}
+  </style>
+  <style>
+    html,body{overflow-x:hidden;overscroll-behavior-x:none;-webkit-tap-highlight-color:transparent}.btn,input,button{min-height:44px;font-size:16px;touch-action:manipulation}.card{min-width:0}
+    @media(max-width:760px){
+      body{background:#05050d}.shell{display:block}.side{position:sticky;top:0;z-index:30;overflow-x:auto;overflow-y:hidden;white-space:nowrap;background:rgba(7,7,17,.96);backdrop-filter:blur(18px);border-bottom:1px solid var(--border)}.side h1{font-size:24px}.side p{display:none}.side nav{display:flex;gap:8px;overflow-x:auto}.side nav a,.side nav button{flex:0 0 auto;border-radius:999px;min-height:40px}
+      .top{position:sticky;top:92px;z-index:20;height:auto;min-height:58px;padding:10px 12px;flex-wrap:wrap}.search{display:block;width:100%;max-width:none;order:3}
+      main{padding:14px 10px 86px}.kpis,.two,.grid{grid-template-columns:1fr}.card{border-radius:14px}.btn{width:100%}h1{font-size:clamp(28px,8vw,36px);line-height:1.08}
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside class="side">
+      <div class="brand">AFFILIX</div><div class="ver">v2.0 sin login temporal</div>
+      <nav class="nav">
+        <h4>Principal</h4><a class="active" href="#dashboard">Dashboard</a><a href="#agente">Agente IA</a>
+        <h4>Productos</h4><a href="#productos">Todos los productos</a><a href="#descubrir">Descubrir nuevos</a><a href="#contenido">Contenido IA</a>
+        <h4>Sistema</h4><a href="#cuentas">Cuentas conectadas</a><a href="#tienda">Tienda pública</a>
+      </nav>
+      <div class="agent"><span class="dot"></span>Agente IA listo<br>Login desactivado temporalmente.</div>
+    </aside>
+    <section>
+      <header class="top">AFFILIX / Panel administrador<input class="search" placeholder="Buscar productos, comisiones, logs..."></header>
+      <main>
+        <div class="notice">Acceso administrador activo. Login desactivado por ahora.</div>
+        <h1 class="title">Dashboard</h1><p class="sub">Sistema de afiliados automatizado con IA multi-provider, tracking y tienda pública.</p>
+        <div class="grid kpis">
+          <div class="card"><div class="label">Comisiones este mes</div><div class="num gold">$0.00</div><div class="bars"><span style="height:25%"></span><span style="height:45%"></span><span style="height:20%"></span><span style="height:65%"></span></div></div>
+          <div class="card"><div class="label">Clicks 30 días</div><div class="num blue">0</div><div class="bars"><span style="height:20%;background:var(--blue)"></span><span style="height:35%;background:var(--blue)"></span><span style="height:55%;background:var(--blue)"></span></div></div>
+          <div class="card"><div class="label">Conversión</div><div class="num green">0.00%</div><div class="bars"><span style="height:25%;background:var(--green)"></span><span style="height:38%;background:var(--green)"></span><span style="height:50%;background:var(--green)"></span></div></div>
+          <div class="card"><div class="label">Productos activos</div><div class="num purple">0</div><div class="bars"><span style="height:35%;background:var(--purple)"></span><span style="height:55%;background:var(--purple)"></span><span style="height:75%;background:var(--purple)"></span></div></div>
+        </div>
+        <div class="grid two">
+          <div class="card"><h2>Comisiones por día</h2><div class="chart"><span style="height:35%"></span><span style="height:45%"></span><span style="height:30%"></span><span style="height:70%"></span><span style="height:55%"></span><span style="height:82%"></span><span style="height:64%"></span></div></div>
+          <div class="card"><h2>Automatizaciones</h2><p class="sub">Auto-discover, precios, contenido IA y nuevos lanzamientos listos para conectar con APIs reales.</p></div>
+        </div>
+        <div class="card" style="margin-top:16px"><h2>Top productos</h2><table><thead><tr><th>Producto</th><th>Plataforma</th><th>Estado</th></tr></thead><tbody><tr><td>Conecta Amazon, ClickBank o CJ</td><td><span class="chip">REAL API</span></td><td>Pendiente</td></tr></tbody></table></div>
+      </main>
+    </section>
+  </div>
+</body>
+</html>

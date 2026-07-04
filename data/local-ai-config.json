@@ -1,0 +1,15 @@
+{
+  "currency": "EUR",
+  "ai_provider": "ollama",
+  "ai_model": "qwen2.5:7b",
+  "ollama_base_url": "http://localhost:11434",
+  "open_webui_url": "http://127.0.0.1:3000",
+  "perplexica_url": "http://127.0.0.1:3001",
+  "n8n_url": "http://127.0.0.1:5678",
+  "image_provider": "custom",
+  "image_model": "comfyui",
+  "image_base_url": "http://127.0.0.1:8188",
+  "updated_at": "2026-07-04T12:18:21.197Z",
+  "store_name": "AFFILIX",
+  "store_slug": "affilix"
+}

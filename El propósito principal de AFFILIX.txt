@@ -1,0 +1,50 @@
+El propósito principal de **AFFILIX** es ser una **tienda automatizada de venta por afiliación**, donde el sistema busca o recibe productos de proveedores, los prepara con IA, los publica en una web lista para vender y mide los resultados desde un panel.
+
+La web trabaja como un sistema automático: primero se conectan proveedores o plataformas de afiliados, luego se importan o descubren productos, después la IA ayuda a completar títulos, descripciones, fotos y contenido de marketing, y finalmente esos productos aparecen publicados en la tienda pública. Cuando una persona entra, ve los productos, hace click, y el sistema registra ese click antes de enviarla a la página de compra del proveedor o afiliado.
+
+En pocas palabras:
+
+**AFFILIX convierte productos de afiliados en una tienda online automatizada.**
+
+Sirve para:
+
+- Publicar productos sin tener inventario propio.
+- Usar enlaces de afiliado para enviar clientes al proveedor.
+- Ganar comisión cuando alguien compra desde esos enlaces.
+- Automatizar contenido, fotos, descripciones y marketing con IA.
+- Controlar todo desde un panel administrativo.
+- Medir clicks, productos activos, conversiones y comisiones.
+
+El flujo principal es este:
+
+1. **Proveedor o plataforma**
+   Entran productos desde Amazon, ClickBank, CJ u otros proveedores.
+
+2. **Base de datos**
+   Supabase guarda productos, imágenes, enlaces, usuarios, clicks y comisiones.
+
+3. **IA**
+   La IA mejora el producto: título, descripción, SEO, contenido y foto si falta.
+
+4. **Publicación**
+   El producto aparece en la tienda pública de AFFILIX.
+
+5. **Cliente**
+   El visitante entra a la web, ve el producto y hace click para comprar.
+
+6. **Tracking**
+   AFFILIX registra el click y redirige al cliente al enlace de afiliado.
+
+7. **Comisión**
+   Si el cliente compra, la comisión se registra o se consulta desde el proveedor conectado.
+
+8. **Panel**
+   Tú ves productos, estadísticas, campañas, proveedores, IA, logs y resultados.
+
+Descripción clara de la web:
+
+**AFFILIX es una plataforma automatizada de comercio por afiliación que permite crear, gestionar y publicar productos de proveedores externos en una tienda online propia. El sistema utiliza inteligencia artificial para generar contenido, completar imágenes, preparar fichas de producto y apoyar acciones de marketing. Cada producto se conecta a un enlace de afiliado, de forma que la web registra los clicks y redirige al comprador al proveedor final, permitiendo controlar ventas, comisiones y rendimiento desde un panel central.**
+
+En versión más comercial:
+
+**AFFILIX es una tienda online inteligente que automatiza la venta de productos de afiliados. El sistema conecta proveedores, publica productos, genera contenido con IA, rellena imágenes faltantes, mide clicks y ayuda a gestionar comisiones desde un solo panel. Su objetivo es vender productos de terceros sin inventario propio, usando automatización e inteligencia artificial para reducir el trabajo manual.**

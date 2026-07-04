@@ -1,0 +1,56 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+.yarn/install-state.gz
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+client_secret_*.json
+client_secret_*.apps.googleusercontent.com.json
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+*.err.log
+
+# local env files
+.env*.local
+.env.vercel*
+*.env
+recovery-codes.txt
+RESEND_API_KEY=*.txt
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+.vercel
+
+# packaged/local build artifacts
+/dist
+/.next-*/
+/output
+/desktop/bin
+/desktop/obj
+
+# local browser/test profiles
+chrome-profile*/

@@ -1,0 +1,1412 @@
+﻿DOCUMENTACION COMPLETA DEL SISTEMA AFFILIX
+Fecha de revisión: 4 de julio de 2026
+Proyecto: AFFILIX - Tienda de venta online automatizada
+Ubicación local: E:\PROYECTO CODEX\TINDA DE VENTA ONLINE AUTOMATIZADA
+
+===============================================================================
+1. RESUMEN DEL SISTEMA
+===============================================================================
+
+AFFILIX es una plataforma de comercio mediante afiliación. Su función principal
+es reunir productos procedentes de proveedores y redes de afiliados, publicarlos
+en una tienda pública y dirigir al comprador al enlace afiliado correcto.
+
+El sistema está dividido en cuatro áreas:
+
+1. Tienda pública:
+   Muestra productos, ofertas, categorías, buscador, fichas y enlaces de compra.
+
+2. Panel principal de administración:
+   Permite gestionar productos, proveedores, afiliados, inteligencia artificial,
+   automatizaciones, analítica, marketing, Meta Ads y configuración.
+
+3. Panel de afiliados AFFILIX Partners:
+   Cada afiliado puede seleccionar productos autorizados, publicarlos en su
+   escaparate, revisar clics, ventas y comisiones, configurar su web y preparar
+   promociones.
+
+4. Backend y base de datos:
+   Guarda productos, conexiones, clics, comisiones, afiliados, campañas,
+   notificaciones y registros de automatización.
+
+AFFILIX no es un proveedor ni una pasarela de pago. Cuando un comprador pulsa
+"Comprar", AFFILIX registra el clic y lo envía al proveedor mediante el enlace
+afiliado. El pago, envío, devolución y entrega corresponden al proveedor.
+
+El principio central es:
+
+PROVEEDOR CONECTADO -> PRODUCTO REAL -> ENLACE AFILIADO REAL ->
+PUBLICACIÓN EN AFFILIX -> CLIC REGISTRADO -> REDIRECCIÓN AL PROVEEDOR
+
+
+===============================================================================
+2. TECNOLOGÍA UTILIZADA
+===============================================================================
+
+Frontend y servidor:
+- Next.js 16.2.6 con App Router.
+- React 18.
+- TypeScript.
+- Tailwind CSS.
+- Rutas dinámicas y endpoints dentro del mismo proyecto.
+
+Base de datos:
+- Supabase/PostgreSQL.
+- Acceso administrativo mediante la REST API de Supabase.
+- Políticas RLS definidas en las migraciones.
+
+Seguridad y sesiones:
+- Cookies HTTP-only.
+- Sesión administrativa independiente.
+- Sesión de afiliado firmada con HMAC-SHA256.
+- Contraseñas de afiliados cifradas con bcrypt, coste 12.
+- Cifrado de credenciales externas antes de guardarlas.
+- Control de origen, cabeceras de seguridad, detección básica de bots y límite
+  de peticiones para endpoints API.
+
+Servicios externos:
+- Vercel para alojamiento y cron jobs.
+- Supabase para datos.
+- Upstash Redis, cuando está configurado, para caché y limitación distribuida.
+- OpenAI, Anthropic, Groq, Mistral u Ollama para funciones de texto.
+- OpenAI o endpoint compatible personalizado para imágenes.
+- Meta Graph API v24.0 para Facebook, Instagram y Meta Ads.
+- Pinterest API v5.
+- X/Twitter API v2.
+- Resend para correo, cuando se configura su API.
+
+
+===============================================================================
+3. ESTADO DEL DESPLIEGUE
+===============================================================================
+
+El sistema está publicado en Vercel.
+
+Proyecto de Vercel:
+- affilix-system
+- Equipo: yfsessions-projects
+
+Despliegue actualmente asociado a producción:
+- ID: dpl_7QVu21jWKrhRTjVv8QwFn1C7vveb
+- Estado verificado el 4 de julio de 2026: Ready
+- Creado el 6 de junio de 2026
+
+Dominios asociados:
+- https://affilix.store
+- https://www.affilix.store
+- https://affilix.es
+- https://www.affilix.es
+- https://store.affilix.es
+- https://affilix-system.vercel.app
+
+Uso de dominios:
+- affilix.store es la tienda pública principal.
+- affilix.es contiene el acceso y panel administrativo.
+- Las rutas de tienda también funcionan bajo las reglas internas de Next.js.
+
+Reglas especiales de dominio:
+- En affilix.store, "/" se reescribe internamente a "/store".
+- En affilix.store, "/productos" se reescribe a la tienda.
+- "/productos/[slug]" se reescribe a la ficha pública correspondiente.
+- Dashboard, login, API, afiliados y tracking mantienen sus rutas originales.
+
+Proceso de publicación utilizado:
+1. Se modifica el código en el proyecto local.
+2. Se valida TypeScript y, cuando corresponde, se ejecuta el build.
+3. Se prepara una copia limpia sin claves ni archivos locales.
+4. Se despliega con Vercel CLI a producción.
+5. Se comprueba que el despliegue esté en estado Ready.
+6. Los alias affilix.store y affilix.es apuntan al nuevo despliegue.
+
+
+===============================================================================
+4. TIENDA PÚBLICA
+===============================================================================
+
+Rutas principales:
+- / o /store: portada de la tienda.
+- /productos: catálogo completo.
+- /productos/[slug]: ficha de producto.
+- /ofertas: productos destacados y ofertas.
+- /go/[slug]: tracking y redirección al proveedor.
+
+Contenido de la portada:
+- Cabecera con logotipo.
+- Buscador.
+- Navegación por departamentos.
+- Ofertas visuales destacadas.
+- Hero con oferta destacada cuando hay producto disponible.
+- Compra por proveedor.
+- Ofertas de la semana.
+- Catálogos de productos nuevos.
+- Carril de productos nuevos.
+- Carril de ofertas destacadas.
+- Carril de productos populares.
+- Filtros por categoría, plataforma y orden.
+- Pie de página con información comercial.
+
+Buscador público:
+- Busca productos por texto.
+- Ofrece sugerencias mientras el usuario escribe.
+- Permite pulsar una sugerencia sin completar toda la palabra.
+- Busca por título, categoría y términos disponibles en el catálogo.
+- Conserva filtros mediante parámetros de URL.
+
+Catálogo:
+- Solo debe mostrar productos activos.
+- Organiza productos por fecha, popularidad, categoría y plataforma.
+- Muestra imagen, título, precio, proveedor y llamada a la acción.
+- Si no existen productos activos, muestra un estado vacío real.
+- No se deben inventar productos para rellenar la tienda.
+
+Ficha de producto:
+- Imagen principal.
+- Título generado o título original.
+- Precio, precio anterior y descuento cuando existen.
+- Categoría y proveedor.
+- Descripción.
+- Datos rápidos.
+- Productos relacionados.
+- Botón de compra.
+
+Flujo de compra:
+1. El cliente abre una ficha.
+2. Pulsa el botón de compra.
+3. El enlace pasa por /go/[slug].
+4. AFFILIX registra el clic.
+5. AFFILIX redirige al affiliate_url real del proveedor.
+
+La comisión solo puede atribuirse correctamente si affiliate_url contiene el
+tracking real de la cuenta conectada. Un enlace normal sin identificador de
+afiliado puede generar una venta sin comisión para AFFILIX.
+
+
+===============================================================================
+5. PANEL PRINCIPAL DE ADMINISTRACIÓN
+===============================================================================
+
+Ruta:
+- /dashboard
+
+Acceso:
+- Protegido por la cookie administrativa affilix_admin.
+- Sin sesión, redirige a /login.
+- La sesión dura siete días.
+
+Función:
+- Presenta el estado general del negocio.
+- No utiliza cifras falsas para aparentar actividad.
+
+Indicadores:
+- Comisiones del mes.
+- Comisiones pendientes.
+- Clics de los últimos 30 días.
+- Tasa de conversión.
+- Productos activos.
+- Gráfica de comisiones por día.
+- Gráfica de clics por día.
+- Productos con mejor rendimiento.
+- Actividad reciente.
+
+Si Supabase no está configurado o no hay datos, el dashboard muestra valores
+vacíos o cero y solicita conectar las fuentes necesarias.
+
+
+===============================================================================
+6. PANEL "TODOS LOS PRODUCTOS"
+===============================================================================
+
+Ruta:
+- /dashboard/products
+
+Funciones:
+- Lista los productos existentes en affiliate_products.
+- Muestra únicamente productos reales guardados.
+- Abre la ficha administrativa de cada producto.
+- Permite ir al descubridor.
+- Permite completar imágenes que falten mediante el endpoint de IA.
+
+Ficha administrativa:
+- /dashboard/products/[id]
+
+Acciones disponibles:
+- Revisar título, descripción, precio, comisión, imagen y proveedor.
+- Abrir el enlace exacto del proveedor.
+- Generar contenido comercial con IA.
+- Subir una imagen manual.
+- Sustituir la foto existente.
+- Intentar obtener la foto pública desde el proveedor.
+
+Actualización de imágenes:
+- Las imágenes se guardan en image_url e images.
+- image_source distingue supplier, ai o manual.
+- La tienda pública consulta el mismo registro.
+- Al cambiar la imagen del producto en el panel, la página pública utiliza la
+  nueva URL automáticamente en la siguiente carga.
+
+
+===============================================================================
+7. PANEL "PROVEEDORES"
+===============================================================================
+
+Ruta:
+- /dashboard/providers
+
+Función:
+- Mostrar y organizar todas las plataformas disponibles.
+- Separarlas por acceso gratuito, de pago o premium.
+- Mostrar su web oficial y requisitos de conexión.
+- Guardar credenciales.
+- Probar la conexión.
+- Importar un producto mediante enlace cuando corresponde.
+- Mostrar tendencias o productos obtenidos cuando una API ofrece catálogo.
+
+Estados posibles:
+- No configurado: no hay datos guardados.
+- Guardado: existen datos, pero no han sido probados.
+- Conectado: la prueba real terminó correctamente.
+- Error: la API rechazó la conexión o faltan datos.
+- Publicación por enlace: la plataforma no ofrece catálogo completo, pero se
+  puede publicar un enlace afiliado aprobado.
+
+Importante:
+- "Conectado" significa que las credenciales o el modo de enlace se validaron.
+- No significa que el proveedor entregue automáticamente todo su marketplace.
+- Algunas redes solo muestran productos aprobados para esa cuenta.
+- Algunas APIs solo muestran productos propios del vendedor.
+- Captcha, 2FA y aprobación humana no pueden sustituirse con una API.
+
+
+===============================================================================
+8. PLATAFORMAS REGISTRADAS EN EL PANEL
+===============================================================================
+
+Productos digitales:
+- Hotmart: gratis.
+- Gumroad: gratis.
+- Payhip: gratis.
+- WarriorPlus: gratis.
+- systeme.io: gratis.
+- ClickBank: gratis.
+- Digistore24: gratis.
+- JVZoo: gratis.
+- Teachable: gratis.
+
+Productos físicos:
+- Amazon Associates: gratis.
+- Amazon Seller Central: premium.
+- eBay Partner Network: gratis.
+- Walmart Affiliates: gratis.
+- Etsy Affiliate Program: premium.
+- Temu Affiliate: gratis.
+- SHEIN Affiliate Program: gratis.
+- AliExpress Portals: gratis.
+
+Redes de afiliación:
+- Rakuten Advertising: premium.
+- CJ Affiliate: premium.
+- ShareASale: premium.
+- Impact: premium.
+- Awin: premium.
+- FlexOffers: premium.
+- PartnerStack: gratis.
+- Fiverr Affiliates: gratis.
+- Shopify Affiliates: premium.
+- Semrush Affiliates: premium.
+- HubSpot Affiliates: premium.
+- Booking.com Affiliate: gratis.
+- Agoda Affiliate Program: gratis.
+- Coinbase Affiliate: premium.
+- Binance Affiliate: premium.
+
+Dropshipping:
+- Spocket: de pago.
+- CJ Dropshipping: gratis.
+
+No todas tienen importador automático completo. El panel las registra, explica
+su alta y permite guardar acceso, pero la profundidad de integración depende de
+la API oficial disponible para cada proveedor.
+
+
+===============================================================================
+9. CONEXIONES DE PROVEEDORES IMPLEMENTADAS
+===============================================================================
+
+Con prueba de API o conector específico:
+
+Amazon Associates:
+- Requiere Access Key, Secret Key y Associate Tag.
+- Usa Product Advertising API.
+- Puede buscar productos, novedades y superventas.
+- Amazon puede exigir ventas calificadas para mantener activa la API.
+
+Amazon Seller Central:
+- Requiere Seller ID, Marketplace ID, LWA Client ID, LWA Client Secret y
+  Refresh Token.
+- La validación necesita autorización SP-API real.
+
+ClickBank:
+- Requiere API Key y Nickname.
+- Puede consultar marketplace.
+- Puede filtrar productos por rentabilidad y gravity.
+
+CJ Affiliate:
+- Requiere API Key y Website ID.
+- Puede usar Product Search API.
+
+Hotmart:
+- Requiere Client ID y Client Secret o Basic Token.
+- Valida credenciales.
+- Los productos afiliados aprobados pueden importarse mediante HotLink.
+
+Gumroad:
+- Requiere Access Token.
+- Lee productos publicados por esa cuenta.
+- Si la cuenta tiene cero productos propios publicados, la API devuelve cero.
+
+WarriorPlus:
+- Requiere API Key.
+- Consulta productos, ofertas y solicitudes de afiliado.
+- Si no existen productos propios ni solicitudes aprobadas, devuelve cero.
+
+Digistore24:
+- Requiere una API Key válida.
+- La prueba usa X-DS-API-KEY.
+- Para productos afiliados se permite publicación mediante enlace aprobado.
+
+JVZoo:
+- Requiere API Key.
+- La prueba usa autenticación Basic con API_KEY:x.
+- La API valida la cuenta, pero no entrega todo el marketplace como catálogo.
+- Los productos se publican con enlaces aprobados por el vendedor.
+
+Payhip:
+- Guarda y prueba la conexión disponible.
+- La API pública no ofrece un feed completo para este uso.
+- Se publica mediante enlace real de producto y foto pública.
+
+systeme.io:
+- Requiere Public API Key.
+- Puede publicar funnels o productos mediante enlace real.
+
+Plataformas sin catálogo automático específico:
+- Las credenciales pueden guardarse y el proveedor puede activarse en modo
+  publicación por enlace.
+- AFFILIX no debe presentar ese modo como un feed API completo.
+
+
+===============================================================================
+10. PANEL "SOLICITUDES AFILIADO"
+===============================================================================
+
+Ruta:
+- /dashboard/affiliate-scout
+
+Objetivo:
+- Simplificar el trabajo con proveedores que exigen aprobación.
+
+Flujo mostrado:
+1. Entrar al proveedor.
+2. Pedir aprobación.
+3. Pegar el enlace afiliado.
+4. Publicar el producto.
+
+El panel ofrece:
+- Botón para abrir el login oficial.
+- Botón para abrir el marketplace.
+- Botón para guardar la API o datos.
+- Formulario para pegar el enlace afiliado aprobado.
+- Precio y porcentaje de comisión opcionales.
+- Nichos recomendados para iniciar búsquedas.
+- Separación entre proveedores conectados y pendientes.
+
+Por qué no guarda correos y contraseñas de proveedores:
+- Compartir contraseñas de terceros dentro de AFFILIX es un riesgo.
+- Los proveedores pueden activar captcha, 2FA y controles de dispositivo.
+- Un robot de login se rompe cuando cambia el diseño de la web.
+- Puede incumplir las condiciones del proveedor.
+
+La solución estable consiste en:
+- Abrir el login oficial.
+- Dejar que el navegador del propietario recuerde la contraseña.
+- Guardar en AFFILIX solo API keys, tokens o enlaces aprobados.
+- Automatizar la importación y publicación después de obtener autorización.
+
+
+===============================================================================
+11. PANEL "DESCUBRIR PRODUCTOS"
+===============================================================================
+
+Ruta:
+- /dashboard/products/discover
+
+Funciones:
+- Buscar por palabras clave.
+- Elegir una plataforma concreta o todas las conectadas.
+- Mostrar nichos rápidos.
+- Importar un resultado encontrado.
+- Importar directamente mediante enlace real.
+
+APIs utilizadas por el descubridor:
+- Amazon.
+- ClickBank.
+- CJ Affiliate.
+- Gumroad.
+- WarriorPlus.
+
+Para otras plataformas:
+- El panel usa el flujo de enlace aprobado.
+- No inventa resultados si no existe una API o feed accesible.
+
+Al importar:
+- Se valida que el proveedor esté conectado.
+- Se guarda el external_id.
+- Se guarda affiliate_url.
+- Se guarda imagen si el proveedor la facilita.
+- Se genera un slug público.
+- Se activa el producto para que aparezca en la tienda.
+
+
+===============================================================================
+12. IMPORTACIÓN Y PUBLICACIÓN DE PRODUCTOS
+===============================================================================
+
+Endpoints principales:
+- POST /api/products/import
+- POST /api/products/import-link
+- POST /api/products/publish
+- POST /api/products/image
+- POST /api/products/fetch-provider-image
+- GET/POST /api/product-image/[id]
+
+Importación desde API:
+1. El proveedor debe estar conectado.
+2. El buscador obtiene un producto externo.
+3. El administrador confirma la importación.
+4. AFFILIX guarda producto, imagen, enlace y plataforma.
+
+Importación por enlace:
+1. El administrador pega el enlace del producto.
+2. El sistema verifica que la plataforma esté activa.
+3. Descarga la página pública si es accesible.
+4. Intenta extraer título, descripción e imagen Open Graph.
+5. Guarda el enlace exacto como affiliate_url.
+6. Publica el producto.
+
+Condición esencial:
+- El enlace pegado debe ser el enlace afiliado que pertenece a la cuenta.
+- AFFILIX no puede convertir un enlace normal en afiliado si el proveedor no
+  ofrece identificador, API o generador de tracking.
+
+Fotografías:
+- Fuente del proveedor: se usa la imagen oficial de la ficha.
+- Manual: el administrador sube una nueva imagen.
+- IA: el sistema genera una imagen cuando hay API configurada.
+- La imagen debe ser pública y accesible por Meta, Instagram y Pinterest.
+
+
+===============================================================================
+13. PANEL DE CONTENIDO E INTELIGENCIA ARTIFICIAL
+===============================================================================
+
+Rutas:
+- /dashboard/content
+- /dashboard/content/seo
+- /dashboard/settings/ai-config
+- /dashboard/ai-agent
+
+Generador de contenido:
+- Genera título comercial.
+- Descripción.
+- Reseña.
+- Pros y contras.
+- Título SEO.
+- Descripción SEO.
+- Palabras clave.
+- Contenido para redes sociales.
+
+Proveedores de texto disponibles:
+- OpenAI.
+- Anthropic.
+- Groq.
+- Mistral.
+- Ollama local.
+
+Modelos predeterminados definidos en código:
+- OpenAI: gpt-4.1.
+- Anthropic: claude-3-5-sonnet-latest.
+- Groq: llama-3.3-70b-versatile.
+- Mistral: mistral-large-latest.
+- Ollama: qwen2.5:7b.
+
+Imágenes:
+- OpenAI.
+- Endpoint personalizado compatible.
+
+Panel de configuración IA:
+- Selecciona proveedor.
+- Guarda API key cifrada.
+- Selecciona modelo.
+- Configura endpoint local para Ollama.
+- Configura modelo y API de imagen.
+- Prueba la conexión.
+- Muestra estado de la IA.
+
+Agente IA:
+- Recibe órdenes.
+- Analiza tareas.
+- Ejecuta acciones permitidas por el backend.
+- Registra el resultado en agent_logs.
+- No debe saltarse aprobaciones de proveedores.
+- No debe publicar productos sin enlace afiliado real.
+
+
+===============================================================================
+14. AUTOMATIZACIONES
+===============================================================================
+
+Rutas:
+- /dashboard/automation
+- /dashboard/automation/campaigns
+- /dashboard/automation/logs
+
+Automatizaciones registradas:
+- Descubrimiento automático.
+- Actualización de precios.
+- Generación de contenido.
+- SEO automático.
+- Nuevos lanzamientos.
+- Seguimiento de comisiones.
+- Agente maestro.
+
+Centro de automatización:
+- Activa o desactiva cada automatización.
+- Ejecuta una acción manual.
+- Muestra descripción, frecuencia y resultado esperado.
+
+Campañas:
+- Permiten seleccionar nicho, plataforma y parámetros.
+- Lanzan trabajos mediante /api/automation/run.
+
+Logs:
+- Traducen acciones técnicas a títulos entendibles.
+- Muestran estado, fecha, acción y detalles.
+- Diferencian éxito, error y proceso.
+- Sirven para saber qué ejecutó realmente el sistema.
+
+Cron jobs de Vercel:
+- 08:00: descubrimiento automático.
+- 08:15: informe diario.
+- 08:30: actualización de precios.
+- 09:00: ejecución de tareas vencidas.
+- 10:00: automatización de marketing.
+
+Las horas de Vercel cron se interpretan según la plataforma, normalmente UTC.
+
+Seguridad de cron:
+- Los endpoints deben validar CRON_SECRET.
+- Sin secreto correcto no deben aceptar ejecuciones externas.
+
+
+===============================================================================
+15. MARKETING Y REDES SOCIALES
+===============================================================================
+
+Rutas:
+- /dashboard/marketing
+- /dashboard/marketing/social-accounts
+- /dashboard/marketing/meta-ads
+
+Panel de marketing:
+- Lista productos disponibles para promoción.
+- Genera contenido para cada producto.
+- Publica en redes conectadas.
+- Crea campaña de Meta Ads.
+- Registra resultados en publish_log.
+
+Cuentas sociales:
+- Facebook Page.
+- Instagram Business.
+- Pinterest.
+- X/Twitter.
+
+Facebook:
+- Requiere Page ID y Page Access Token.
+- Publica una foto con texto y enlace.
+
+Instagram:
+- Requiere Instagram Business ID y token.
+- Crea el contenedor multimedia y después lo publica.
+- Necesita una imagen pública.
+
+Pinterest:
+- Requiere token y Board ID.
+- Publica un pin con imagen, descripción y enlace.
+
+X/Twitter:
+- Requiere token válido.
+- Publica texto y enlace mediante API v2.
+
+Las credenciales se guardan cifradas.
+
+
+===============================================================================
+16. META ADS
+===============================================================================
+
+Ruta:
+- /dashboard/marketing/meta-ads
+
+Configuración:
+- Meta Access Token.
+- Ad Account ID.
+- Facebook Page ID.
+- Pixel ID opcional.
+- Presupuesto mensual.
+
+Funciones:
+- Probar conexión.
+- Guardar configuración.
+- Elegir presupuesto.
+- Crear campañas por producto.
+- Consultar impresiones, clics, CTR, gasto y ROAS.
+- Pausar, reanudar o eliminar campañas.
+- Redistribuir presupuesto según rendimiento.
+
+Creación de campaña:
+- Objetivo OUTCOME_TRAFFIC.
+- Campaña creada inicialmente en PAUSED.
+- Ad set optimizado para LINK_CLICKS.
+- Presupuesto convertido a presupuesto diario.
+- Imagen tomada del producto.
+- URL dirigida a la ficha pública AFFILIX.
+- Segmentación inicial por países ES, MX, AR, CO y US.
+- Intereses básicos según categoría.
+
+Importante:
+- Crear una campaña en PAUSED no empieza a gastar automáticamente.
+- Meta exige cuenta publicitaria, método de pago y permisos válidos.
+- AFFILIX no puede cargar dinero directamente en Meta sin el proceso oficial.
+
+
+===============================================================================
+17. PANEL ADMINISTRATIVO DE AFILIADOS
+===============================================================================
+
+Ruta:
+- /dashboard/affiliates
+
+Funciones:
+- Crear acceso de afiliado.
+- Definir nombre, marca, correo y contraseña inicial.
+- Generar store_slug.
+- Establecer reparto de comisión.
+- Listar afiliados activos.
+- Abrir la tienda individual.
+- Pausar, activar o bloquear cuentas.
+- Probar el login de afiliado.
+
+Reparto de comisiones:
+- affiliate_commission_rate: porcentaje para el afiliado.
+- owner_commission_rate: porcentaje para AFFILIX.
+
+La suma y aplicación final deben corresponder al acuerdo comercial definido.
+
+
+===============================================================================
+18. LOGIN Y PANEL DEL AFILIADO
+===============================================================================
+
+Rutas:
+- /affiliate/login
+- /affiliate/panel
+- /affiliate/dashboard, que dirige al panel.
+
+Acceso:
+- Correo y contraseña creados desde el panel administrativo.
+- También reconoce la cuenta oficial administrativa para redirigir al dashboard.
+- Sesión firmada y guardada en cookie HTTP-only.
+- Duración de siete días.
+
+Secciones del panel:
+
+Dashboard:
+- Nombre de la marca.
+- Resumen de productos, clics, ventas y comisiones.
+- Acceso a web principal y web afiliada.
+
+Notificaciones:
+- Ventas.
+- Clics.
+- Publicaciones.
+- Cambios y avisos de la cuenta.
+
+Ventas:
+- Historial de ventas y comisiones.
+- Estado pendiente, aprobado, pagado o rechazado.
+- Separación de comisión para afiliado y propietario.
+
+Publicaciones:
+- Catálogo procedente de los proveedores conectados por el administrador.
+- Buscador.
+- Filtros por categoría.
+- Selección de productos.
+- Publicación en el escaparate del afiliado.
+- Creación de promoción.
+
+Productos iniciales:
+- El panel prioriza un grupo reducido de productos populares.
+- No muestra proveedores ni solicita credenciales al afiliado.
+- Los proveedores se gestionan en el panel principal.
+
+Promociones Meta:
+- Permite elegir producto y presupuesto.
+- Permite usar la cuenta Meta principal, cuando el administrador la habilita,
+  o una cuenta Meta propia.
+- Registra solicitudes y estado de promoción.
+- La ejecución real requiere tokens, cuenta publicitaria y permisos válidos.
+
+Productos publicados:
+- Lista los productos publicados por ese afiliado.
+- Muestra clics.
+- Permite abrir la ficha de su tienda.
+
+Página web:
+- Botón "Web principal AFFILIX": abre https://affilix.store.
+- Botón "Mi web afiliada": abre la URL externa configurada o su escaparate.
+- Configuración de dominio propio.
+- Estado de DNS.
+
+Analítica:
+- Clics.
+- Ventas.
+- Conversión.
+- Comisiones.
+- Evolución y objetivos.
+
+Ajustes:
+- Nombre.
+- Marca.
+- Web propia.
+- Correo de pagos.
+- Dominio personalizado.
+- Objetivos de clics, ventas e ingresos.
+
+Cerrar cuenta:
+- Solicita confirmación.
+- Pide motivo.
+- Permite comentario libre.
+- Guarda la solicitud en la cuenta para revisión administrativa.
+
+
+===============================================================================
+19. TIENDAS INDIVIDUALES DE AFILIADOS
+===============================================================================
+
+Rutas:
+- /a/[storeSlug]
+- /a/[storeSlug]/[productSlug]
+- /a/go/[storeSlug]/[productSlug]
+- /a/go/[storeSlug]/main/[productSlug]
+
+Funcionamiento:
+- Cada afiliado tiene un store_slug único.
+- Su escaparate muestra los productos que ha publicado.
+- La ficha mantiene su marca y enlace.
+- El clic se registra antes de salir.
+
+Dos destinos:
+- Web principal AFFILIX: producto publicado en la tienda principal.
+- Web del afiliado: escaparate interno o dominio externo configurado.
+
+Tracking:
+- Registra partner_id.
+- Registra producto.
+- Puede guardar sesión, IP, user-agent y referencia.
+- Aumenta contadores del producto y del afiliado.
+- Redirige finalmente al affiliate_url.
+
+
+===============================================================================
+20. ANALÍTICA Y COMISIONES
+===============================================================================
+
+Rutas:
+- /dashboard/analytics
+- /dashboard/analytics/commissions
+
+Datos registrados:
+- Clics.
+- Producto.
+- Usuario o afiliado.
+- Plataforma.
+- Conversión.
+- Venta bruta.
+- Comisión total.
+- Comisión del afiliado.
+- Comisión de AFFILIX.
+- Estado de la comisión.
+- Fecha.
+
+Exportación:
+- /api/analytics/commission?format=csv
+- Genera un CSV de comisiones.
+
+Limitación:
+- Un clic se registra internamente.
+- Una venta requiere webhook, API o registro confirmado por el proveedor.
+- Sin integración de conversión del proveedor, AFFILIX no puede conocer de
+  forma fiable una venta únicamente por haber enviado al usuario.
+
+
+===============================================================================
+21. NOTIFICACIONES Y CORREO
+===============================================================================
+
+Administración:
+- /dashboard/notifications
+- Muestra registros, accesos, ventas, clics y actividad.
+
+Afiliados:
+- La sección de notificaciones está dentro de /affiliate/panel.
+- Muestra eventos relacionados con la cuenta correspondiente.
+
+Tablas:
+- admin_notifications.
+- affiliate_notifications.
+- notifications.
+
+Correo:
+- system_email_outbox almacena mensajes.
+- Resend envía correos cuando RESEND_API_KEY está configurada.
+- EMAIL_FROM define el remitente.
+- SYSTEM_OWNER_EMAIL define el destinatario principal del sistema.
+
+
+===============================================================================
+22. CONFIGURACIÓN GENERAL
+===============================================================================
+
+Rutas:
+- /dashboard/settings
+- /dashboard/settings/notifications
+- /dashboard/settings/ai-config
+- /dashboard/setup
+- /dashboard/accounts
+
+Configuración general:
+- Nombre de tienda.
+- Slug.
+- Idioma.
+- Moneda.
+- Datos generales del perfil.
+
+Setup AFFILIX:
+- Guía paso a paso.
+- Estado de cada proveedor.
+- Requisitos.
+- Enlaces de registro.
+- Automatizaciones.
+
+Cuentas conectadas:
+- Vista resumida de credenciales.
+- Guardar conexión.
+- Probar conexión real.
+- Ver mensaje del proveedor.
+
+Las claves nunca deben mostrarse completas después de guardarlas.
+
+
+===============================================================================
+23. PANEL DE OPORTUNIDADES
+===============================================================================
+
+Ruta:
+- /dashboard/opportunities
+
+Objetivo:
+- Organizar ideas de negocio según dificultad, inversión e impacto.
+
+Flujo:
+1. Elegir oportunidad.
+2. Conectar proveedor.
+3. Publicar producto real.
+4. Promocionar.
+
+Este panel es orientativo. Una oportunidad no se convierte en producto hasta
+que exista proveedor, aprobación y enlace de venta.
+
+
+===============================================================================
+24. BASE DE DATOS
+===============================================================================
+
+Tablas principales:
+
+user_profiles:
+- Perfil, tienda, moneda, plan y configuración IA.
+
+platform_accounts:
+- Proveedor, credenciales cifradas, conexión y último resultado.
+
+niches:
+- Nichos, competencia, búsquedas, tendencia y plataformas.
+
+affiliate_products:
+- Catálogo principal de productos.
+
+click_events:
+- Clics de la tienda principal.
+
+commissions:
+- Comisiones del negocio principal.
+
+automation_campaigns:
+- Campañas y parámetros de automatización.
+
+ai_generated_content:
+- Contenido creado por IA.
+
+agent_logs:
+- Acciones, estados y errores del agente.
+
+notifications:
+- Notificaciones generales.
+
+platform_setup_progress:
+- Estado del proceso de configuración.
+
+automation_settings:
+- Automatizaciones activadas y cron configurado.
+
+affiliate_partners:
+- Cuentas AFFILIX Partners.
+
+affiliate_partner_products:
+- Productos publicados por cada afiliado.
+
+affiliate_partner_clicks:
+- Clics de escaparates afiliados.
+
+affiliate_partner_commissions:
+- Ventas y reparto de comisiones.
+
+affiliate_partner_accounts:
+- Conexiones externas propias de un afiliado, cuando se habilitan.
+
+affiliate_partner_promotions:
+- Productos promocionados por afiliados.
+
+affiliate_partner_promotion_clicks:
+- Clics en promociones.
+
+affiliate_meta_accounts:
+- Cuenta Meta elegida por el afiliado.
+
+affiliate_meta_promotions:
+- Solicitudes y campañas Meta del afiliado.
+
+marketing_content:
+- Copys preparados para redes.
+
+social_accounts:
+- Cuentas y tokens sociales cifrados.
+
+meta_config:
+- Configuración Meta Ads.
+
+meta_campaigns:
+- Campañas, gasto y resultados.
+
+publish_log:
+- Resultado de publicaciones en redes y campañas.
+
+system_email_outbox:
+- Cola e historial de correo.
+
+admin_notifications:
+- Eventos para el administrador.
+
+affiliate_notifications:
+- Eventos individuales para afiliados.
+
+
+===============================================================================
+25. ENDPOINTS DEL BACKEND
+===============================================================================
+
+Autenticación:
+- /api/auth/login
+- /api/auth/logout
+- /api/auth/register
+- /api/auth/google/start
+- /api/auth/google/callback
+
+Afiliados:
+- /api/admin/affiliates
+- /api/affiliate/auth/login
+- /api/affiliate/auth/logout
+- /api/affiliate/products
+- /api/affiliate/promotions
+- /api/affiliate/sales
+- /api/affiliate/settings
+- /api/affiliate/account/close
+- /api/affiliate/accounts/connect
+- /api/affiliate/accounts/test
+- /api/affiliate/meta-promotions
+
+Proveedores:
+- /api/accounts/connect
+- /api/accounts/disconnect
+- /api/accounts/test
+- /api/amazon/search
+- /api/amazon/bestsellers
+- /api/amazon/new-releases
+- /api/amazon/product/[asin]
+- /api/clickbank/marketplace
+- /api/clickbank/product/[sku]
+- /api/cj/products
+
+Productos:
+- /api/products/import
+- /api/products/import-link
+- /api/products/publish
+- /api/products/sell
+- /api/products/image
+- /api/products/fetch-provider-image
+- /api/product-image/[id]
+
+IA:
+- /api/ai/agent
+- /api/ai/chat
+- /api/ai/analyze-niche
+- /api/ai/discover-products
+- /api/ai/generate-content
+- /api/ai/generate-product-image
+- /api/ai/fill-product-images
+- /api/ai/test-config
+
+Automatización:
+- /api/automation/run
+- /api/automation/due
+- /api/automation/cron-discover
+- /api/automation/cron-content
+- /api/automation/cron-prices
+- /api/automation/cron-new-releases
+- /api/automation/cron-marketing
+- /api/automation/cron-daily-report
+
+Marketing:
+- /api/marketing/generate-content
+- /api/marketing/publish
+- /api/marketing/social-accounts
+- /api/marketing/social-accounts/test
+- /api/marketing/meta/config
+- /api/marketing/meta/test
+- /api/marketing/meta/create-campaign
+- /api/marketing/meta/insights
+- /api/marketing/meta/rebalance
+
+Analítica:
+- /api/analytics/stats
+- /api/analytics/track
+- /api/analytics/commission
+
+Webhooks:
+- /api/webhooks/amazon
+- /api/webhooks/clickbank
+
+Sistema:
+- /api/settings/general
+- /api/setup-state
+- /api/dashboard/search
+- /api/admin/email-preview
+- /api/customers/complaints
+
+
+===============================================================================
+26. VARIABLES DE ENTORNO
+===============================================================================
+
+Variables necesarias, sin mostrar valores:
+
+Supabase:
+- NEXT_PUBLIC_SUPABASE_URL
+- NEXT_PUBLIC_SUPABASE_ANON_KEY
+- SUPABASE_SERVICE_ROLE_KEY
+
+Redis:
+- UPSTASH_REDIS_REST_URL
+- UPSTASH_REDIS_REST_TOKEN
+
+Aplicación:
+- NEXT_PUBLIC_APP_URL
+- NEXT_PUBLIC_APP_NAME
+- NEXT_PUBLIC_STORE_URL
+- APP_ALLOWED_ORIGINS
+
+Administrador:
+- ADMIN_EMAIL
+- ADMIN_PASSWORD
+- ADMIN_USERS_JSON o ADMIN_USERS
+- SYSTEM_OWNER_EMAIL
+
+Seguridad:
+- AFFILIATE_SESSION_SECRET
+- ENCRYPTION_KEY
+- CSRF_SECRET
+- CRON_SECRET
+- WEBHOOK_SECRET
+
+Correo:
+- EMAIL_FROM
+- RESEND_API_KEY
+
+Google:
+- GOOGLE_CLIENT_ID
+- GOOGLE_CLIENT_SECRET
+- GOOGLE_REDIRECT_URI
+- GOOGLE_ALLOWED_EMAILS
+- GOOGLE_OAUTH_CLIENT_FILE
+
+Meta:
+- META_APP_ID
+- META_APP_SECRET
+
+Telegram opcional:
+- TELEGRAM_BOT_TOKEN
+- TELEGRAM_CHAT_ID
+
+Las credenciales de IA, plataformas, redes sociales y Meta también se guardan
+por cuenta en Supabase. No deben escribirse directamente en el código.
+
+
+===============================================================================
+27. SEGURIDAD
+===============================================================================
+
+Medidas existentes:
+- Cookies HTTP-only.
+- Cookies Secure en producción.
+- SameSite Lax.
+- Contraseñas de afiliados con bcrypt.
+- Sesiones de afiliado firmadas.
+- Credenciales externas cifradas.
+- Filtrado de orígenes.
+- Rate limit de API.
+- Detección básica de robots.
+- Cabeceras de seguridad.
+- Separación de sesión administrativa y afiliada.
+- RLS en tablas.
+- Cron protegido por secreto.
+- Webhooks preparados para firma.
+
+Puntos que deben conservarse al modificar:
+- Nunca exponer SUPABASE_SERVICE_ROLE_KEY al navegador.
+- Nunca mostrar tokens completos en HTML.
+- Nunca guardar contraseñas de proveedores en texto plano.
+- Nunca desactivar la validación de proveedor antes de publicar.
+- Nunca permitir que un afiliado consulte datos de otro.
+- Nunca confiar en precios, comisiones o ventas enviados solo por el navegador.
+
+
+===============================================================================
+28. LIMITACIONES REALES DEL SISTEMA
+===============================================================================
+
+1. Una API conectada puede devolver cero productos.
+   Esto ocurre si la cuenta no tiene productos propios, ofertas o aprobaciones.
+
+2. Conectar una cuenta no concede acceso a todo el marketplace.
+   JVZoo, WarriorPlus, Impact y otras redes aplican aprobaciones del vendedor.
+
+3. AFFILIX no puede garantizar una comisión con un enlace normal.
+   Debe usarse el enlace afiliado aprobado.
+
+4. Una imagen no siempre puede copiarse automáticamente.
+   Algunas webs bloquean descargas, usan JavaScript o prohíben hotlinking.
+
+5. Las ventas no se conocen solo por los clics.
+   Se necesita webhook, API de conversiones o confirmación del proveedor.
+
+6. Un robot de correo y contraseña no es una conexión estable.
+   Captcha, 2FA y términos del proveedor pueden bloquearlo.
+
+7. Meta Ads necesita autorización y método de pago.
+   AFFILIX prepara y controla campañas, pero Meta decide permisos y cobros.
+
+8. La IA necesita una API válida.
+   Sin API, no puede generar contenido ni imágenes externas.
+
+9. Los cron jobs solo ejecutan correctamente si Vercel tiene las variables y
+   Supabase responde.
+
+10. La base de datos en vivo no pudo consultarse durante esta documentación
+    porque el dominio del proyecto Supabase no resolvió desde el entorno local.
+    Por ello este archivo documenta el código y el despliegue verificado, pero
+    no afirma cantidades actuales de productos, clics o cuentas conectadas.
+
+
+===============================================================================
+29. FLUJO OPERATIVO RECOMENDADO
+===============================================================================
+
+Para dejar un proveedor produciendo:
+1. Abrir /dashboard/providers.
+2. Registrarse en la web oficial.
+3. Solicitar acceso de afiliado si es necesario.
+4. Crear API key o token cuando exista.
+5. Guardar los datos.
+6. Pulsar "Probar conexión real".
+7. Confirmar estado conectado.
+8. Buscar productos por API o abrir /dashboard/affiliate-scout.
+9. Solicitar aprobación del producto.
+10. Copiar el enlace afiliado aprobado.
+11. Importarlo.
+12. Revisar título, precio, imagen y comisión.
+13. Abrir la ficha pública.
+14. Probar el botón de compra.
+
+Para publicar en redes:
+1. Conectar cuentas sociales.
+2. Probar sus tokens.
+3. Seleccionar un producto con imagen pública.
+4. Generar contenido.
+5. Revisar el texto.
+6. Publicar.
+7. Comprobar publish_log.
+
+Para Meta Ads:
+1. Configurar cuenta publicitaria y página.
+2. Probar Meta.
+3. Elegir presupuesto.
+4. Crear campaña.
+5. Revisarla en Meta Ads Manager.
+6. Activarla cuando esté correcta.
+7. Sincronizar resultados.
+
+Para crear un afiliado:
+1. Abrir /dashboard/affiliates.
+2. Crear usuario y contraseña inicial.
+3. Definir marca y reparto.
+4. Probar /affiliate/login.
+5. Seleccionar productos permitidos.
+6. Publicarlos en su escaparate.
+7. Probar su URL /a/[storeSlug].
+
+
+===============================================================================
+30. ARCHIVOS IMPORTANTES PARA LOS PRÓXIMOS CAMBIOS
+===============================================================================
+
+Estructura y navegación:
+- components/layout/Sidebar.tsx
+- app/dashboard/layout.tsx
+- app/globals.css
+- proxy.ts
+
+Tienda:
+- app/store/page.tsx
+- app/store/[slug]/page.tsx
+- components/store/PublicSearchBox.tsx
+- app/go/[slug]/route.ts
+- lib/store-links.ts
+
+Productos:
+- app/dashboard/products/page.tsx
+- app/dashboard/products/[id]/page.tsx
+- app/dashboard/products/discover/page.tsx
+- app/api/products/import/route.ts
+- app/api/products/import-link/route.ts
+- app/api/products/image/route.ts
+- lib/product-discovery.ts
+- lib/product-images.ts
+
+Proveedores:
+- app/dashboard/providers/page.tsx
+- app/dashboard/affiliate-scout/page.tsx
+- app/api/accounts/connect/route.ts
+- app/api/accounts/test/route.ts
+- lib/setup-data.ts
+- lib/digital-platform-apis.ts
+- lib/platform-accounts.ts
+
+Afiliados:
+- app/dashboard/affiliates/page.tsx
+- app/affiliate/login/page.tsx
+- app/affiliate/panel/page.tsx
+- app/api/admin/affiliates/route.ts
+- app/api/affiliate/*
+- lib/affiliate-auth.ts
+
+IA:
+- app/dashboard/settings/ai-config/page.tsx
+- app/api/ai/*
+- lib/openai-client.ts
+- lib/image-client.ts
+
+Automatización:
+- app/dashboard/automation/*
+- app/api/automation/*
+- lib/product-automation.ts
+- lib/local-automation-settings.ts
+- vercel.json
+
+Marketing:
+- app/dashboard/marketing/*
+- app/api/marketing/*
+- lib/marketing/*
+
+Base de datos:
+- supabase/migrations/001_initial_schema.sql
+- supabase/migrations/002_setup_affilix.sql
+- supabase/migrations/003_product_images_ai.sql
+- supabase/migrations/004_affiliate_partner_system.sql
+- supabase/migrations/005_system_email_outbox.sql
+- supabase/migrations/006_amazon_seller_platform.sql
+- supabase/migrations/007_marketing_schema.sql
+- supabase/migrations/008_digital_provider_platforms.sql
+- supabase/migrations/009_more_affiliate_marketplaces.sql
+- supabase/migrations/010_affiliate_partner_provider_accounts.sql
+- supabase/migrations/011_affiliate_goals_domains_promotions.sql
+- supabase/migrations/012_affiliate_close_feedback.sql
+- supabase/migrations/013_affiliate_meta_promotions.sql
+- supabase/migrations/014_admin_affiliate_notifications.sql
+
+
+===============================================================================
+31. CONCLUSIÓN
+===============================================================================
+
+AFFILIX ya dispone de:
+- Tienda pública.
+- Catálogo y fichas de producto.
+- Tracking de clics.
+- Panel administrativo.
+- Gestión de proveedores.
+- Importación por API y enlace.
+- Imágenes manuales, del proveedor o IA.
+- Generación de contenido.
+- Automatizaciones.
+- Marketing social.
+- Meta Ads.
+- Analítica y comisiones.
+- Panel completo de afiliados.
+- Escaparates individuales.
+- Notificaciones.
+- Despliegue en Vercel.
+- Base de datos Supabase.
+
+La parte que determina que el sistema genere ingresos no es solo el diseño o la
+conexión técnica. Cada producto necesita:
+
+1. Proveedor realmente conectado.
+2. Aprobación de afiliado cuando sea obligatoria.
+3. Enlace afiliado que pertenezca a AFFILIX.
+4. Imagen y ficha reales.
+5. Producto activo en la tienda.
+6. Tracking de conversión disponible para confirmar ventas.
+
+Este documento representa la arquitectura y las funciones encontradas en el
+código del proyecto a fecha 4 de julio de 2026. Debe actualizarse después de
+cambios importantes en paneles, proveedores, base de datos o despliegue.
