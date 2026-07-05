@@ -23,10 +23,10 @@ const importSchema = z.object({
 export async function POST(req: NextRequest) {
   const form = await req.formData();
   const parsed = importSchema.safeParse(Object.fromEntries(form.entries()));
-  if (!parsed.success) return NextResponse.redirect(new URL("/dashboard/products/discover?error=producto_invalido", req.url), 303);
+  if (!parsed.success) return NextResponse.redirect(new URL("/dashboard/niche-factory?error=producto_invalido", req.url), 303);
 
   const product = parsed.data;
-  if (product.source_status === "local") return NextResponse.redirect(new URL("/dashboard/products/discover?error=solo_api_real", req.url), 303);
+  if (product.source_status === "local") return NextResponse.redirect(new URL("/dashboard/niche-factory?error=solo_api_real", req.url), 303);
   let supplierImageUrl = product.image_url || "";
   if (!supplierImageUrl) {
     try {

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 
 type AgentStep = {
@@ -254,8 +255,7 @@ export function AgentPanel() {
                 <a href={`/dashboard/products/${product.id}`} className="block">
                   <div className="aspect-[16/9] bg-[#0b0b16]">
                     {product.image_url ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img alt={product.title} className="h-full w-full object-cover" src={product.image_url} />
+                      <Image alt={product.title} className="h-full w-full object-cover" src={product.image_url} width={640} height={360} unoptimized />
                     ) : (
                       <div className="grid h-full place-items-center text-sm font-bold text-[var(--text-muted)]">Sin imagen</div>
                     )}

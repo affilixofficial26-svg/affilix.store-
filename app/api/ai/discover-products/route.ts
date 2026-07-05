@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
   const result = await discoverProducts(keywords, body.platform || "all");
   await getAdminDb().insert("agent_logs", { user_id: body.user_id || null, action: "discover_products", details: { keywords, total: result.products.length, errors: result.errors }, status: "success" });
   if (!contentType.includes("application/json")) {
-    return NextResponse.redirect(new URL(`/dashboard/products/discover?keywords=${encodeURIComponent(keywords)}&platform=${encodeURIComponent(String(body.platform || "all"))}`, req.url), 303);
+    return NextResponse.redirect(new URL(`/dashboard/niche-factory?keywords=${encodeURIComponent(keywords)}&platform=${encodeURIComponent(String(body.platform || "all"))}`, req.url), 303);
   }
   return NextResponse.json({ ok: true, products: result.products, errors: result.errors, slug: slugify(keywords) });
 }

@@ -54,3 +54,5 @@ next-env.d.ts
 
 # local browser/test profiles
 chrome-profile*/
+
+.vercel

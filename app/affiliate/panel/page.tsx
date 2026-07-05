@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { redirect } from "next/navigation";
 import { getCurrentAffiliatePartner } from "@/lib/affiliate-auth";
 import { getStoreBaseUrl } from "@/lib/store-links";
@@ -227,7 +228,7 @@ export default async function AffiliatePanelPage({ searchParams }: { searchParam
       <div className="mx-auto grid max-w-[1500px] gap-6 lg:grid-cols-[260px_1fr]">
         <aside className="surface top-6 h-fit p-4 lg:sticky">
           <div className="flex items-center gap-3 border-b border-[var(--border)] pb-4">
-            <img className="h-14 w-14 rounded-full object-cover" src="/affilix-partners-logo.png" alt="AFFILIX Partners" />
+            <Image className="h-14 w-14 rounded-full object-cover" src="/affilix-partners-logo.png" alt="AFFILIX Partners" width={56} height={56} />
             <div>
               <div className="font-display text-base font-bold">AFFILIX Partners</div>
               <div className="text-xs text-[var(--text-secondary)]">{partner.brand_name}</div>
@@ -267,7 +268,7 @@ export default async function AffiliatePanelPage({ searchParams }: { searchParam
                   <Link className="btn" href={ownSiteUrl}>Abrir mi web afiliada</Link>
                 </div>
               </div>
-              <img className="mx-auto h-44 w-44 rounded-full object-cover shadow-2xl shadow-black/40" src="/affilix-partners-logo.png" alt="AFFILIX Partners" />
+              <Image className="mx-auto h-44 w-44 rounded-full object-cover shadow-2xl shadow-black/40" src="/affilix-partners-logo.png" alt="AFFILIX Partners" width={176} height={176} />
             </div>
           </header>
 
@@ -370,7 +371,7 @@ export default async function AffiliatePanelPage({ searchParams }: { searchParam
                 return (
                   <article key={product.id} className="overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--bg-elevated)]">
                     <div className="aspect-[4/3] bg-[var(--bg-input)]">
-                      <img className="h-full w-full object-cover" src={product.image_url || "/placeholder-product.svg"} alt={publicProductText(product.title)} />
+                      <Image className="h-full w-full object-cover" src={product.image_url || "/placeholder-product.svg"} alt={publicProductText(product.title)} width={640} height={480} unoptimized />
                     </div>
                     <div className="p-4">
                       <div className="flex items-center justify-between gap-3">

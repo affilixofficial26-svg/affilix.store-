@@ -203,7 +203,7 @@ export async function POST(req: NextRequest) {
   } else {
     account = (await getProviderAccountMap()).get(platform);
   }
-  const referer = req.headers.get("referer") || "/dashboard/providers";
+  const referer = req.headers.get("referer") || "/dashboard/integrations";
 
   if (!account) {
     const message = "No hay datos guardados para este proveedor. Abre el proveedor y guarda sus credenciales API antes de probar.";

@@ -96,7 +96,7 @@ export async function POST(req: NextRequest) {
     if (connectionMethod === "external_login" && officialSignupUrl) {
       return NextResponse.redirect(officialSignupUrl, 303);
     }
-    const referer = req.headers.get("referer") || "/dashboard/providers";
+    const referer = req.headers.get("referer") || "/dashboard/integrations";
     return NextResponse.redirect(new URL(referer, req.url), 303);
   }
   const parsed = aiConfigSchema.safeParse(data);

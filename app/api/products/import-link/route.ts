@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
   const contentType = req.headers.get("content-type") || "";
   const data = contentType.includes("application/json") ? await req.json() : Object.fromEntries((await req.formData()).entries());
   const parsed = importLinkSchema.safeParse(data);
-  const referer = req.headers.get("referer") || "/dashboard/providers";
+  const referer = req.headers.get("referer") || "/dashboard/integrations";
 
   if (!parsed.success) {
     if (contentType.includes("application/json")) return NextResponse.json({ error: "Datos de producto digital invalidos" }, { status: 400 });

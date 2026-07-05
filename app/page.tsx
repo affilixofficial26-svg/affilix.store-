@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import {
   AppWindow, ArrowRight, BadgeEuro, BarChart3, BriefcaseBusiness,
   Check, ChevronDown, CloudDownload, Code2, DownloadCloud,
@@ -130,7 +131,7 @@ export default async function HomePage() {
         <SectionHeading eyebrow="Descargas" title="Productos digitales listos para descargar." copy="Packs, plantillas, ebooks y recursos creados para negocios, creadores y emprendedores." />
         <div className="mx-auto max-w-7xl px-4 lg:px-6">
           {catalog.products.length ? <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{catalog.products.slice(0, 6).map(item => <article className="hub-product" key={item.id}>
-            <div className="hub-product-image">{item.image_url ? <img src={`/api/catalog-image/${item.id}`} alt="" /> : <FileArchive size={42} />}</div>
+            <div className="hub-product-image">{item.image_url ? <Image src={`/api/catalog-image/${item.id}`} alt="" width={640} height={380} className="h-full w-full object-cover" /> : <FileArchive size={42} />}</div>
             <div className="p-5"><span className="hub-status">{item.item_type.replaceAll("_", " ")}</span><h3 className="mt-3 text-xl font-black">{publicTitle(item.title)}</h3><p className="mt-2 text-sm leading-6 text-slate-400">{item.short_description}</p><div className="mt-5 flex items-center justify-between">{item.price != null && <b>{Number(item.price).toLocaleString("es-ES", { style: "currency", currency: item.currency || "EUR" })}</b>}<Link href={`/p/${item.slug}`}>Ver producto <ArrowRight size={14} /></Link></div></div>
           </article>)}</div> : <div className="hub-empty"><FileArchive size={34} /><h3>Estamos preparando los primeros recursos digitales.</h3><p>Pronto podras descargar packs, plantillas, ebooks y kits listos para usar.</p><Link className="btn btn-primary" href="/servicios-ia">Ver servicios</Link></div>}
         </div>

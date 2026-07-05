@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default async function AffiliateLoginPage({
   searchParams,
 }: {
@@ -14,7 +16,7 @@ export default async function AffiliateLoginPage({
       <div className="auth-shell">
         <form action="/api/affiliate/auth/login" method="post" className="auth-card surface space-y-4 p-7 shadow-2xl shadow-black/30">
           <div>
-            <img className="mx-auto h-36 w-36 rounded-full object-cover shadow-2xl shadow-black/40" src="/affilix-partners-logo.png" alt="AFFILIX Partners" />
+            <Image className="mx-auto h-36 w-36 rounded-full object-cover shadow-2xl shadow-black/40" src="/affilix-partners-logo.png" alt="AFFILIX Partners" width={144} height={144} />
             <h1 className="font-display mt-6 text-2xl font-bold">Acceso afiliado</h1>
             <p className="mt-2 text-sm leading-6 text-[var(--text-secondary)]">
               Entra con una cuenta afiliada para abrir su dashboard privado. El panel administrador se gestiona aparte desde el acceso oficial.
