@@ -1,16 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { clearLoginFailures, getRequestIp, recordLoginFailure, sendTelegramAlert } from "@/lib/security";
 import { exchangeGoogleCode, getGoogleUserInfo, googleRedirectCookie, googleStateCookie, isAllowedGoogleEmail } from "@/lib/google-oauth";
-
-function adminCookieOptions() {
-  return {
-    httpOnly: true,
-    sameSite: "lax" as const,
-    secure: process.env.NODE_ENV === "production",
-    path: "/",
-    maxAge: 60 * 60 * 24 * 7,
-  };
-}
+import { setAdminSessionCookie } from "@/lib/admin-auth";
 
 export async function GET(req: NextRequest) {
   const code = req.nextUrl.searchParams.get("code");
@@ -36,7 +27,7 @@ export async function GET(req: NextRequest) {
 
     clearLoginFailures(lockKey);
     const res = NextResponse.redirect(new URL(redirectTo.startsWith("/") ? redirectTo : "/dashboard", req.url), 303);
-    res.cookies.set("affilix_admin", "true", adminCookieOptions());
+    setAdminSessionCookie(res, email);
     res.cookies.delete(googleStateCookie);
     res.cookies.delete(googleRedirectCookie);
     return res;

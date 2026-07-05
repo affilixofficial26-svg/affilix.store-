@@ -1,23 +1,25 @@
 import { NextRequest, NextResponse } from "next/server";
 import type Stripe from "stripe";
-import { getAdminDb } from "@/lib/supabase";
+import { completePaidOrder } from "@/lib/payments";
 import { getStripe } from "@/lib/stripe";
 import { requiredEnv } from "@/lib/utils";
 
 async function completeCheckout(session: Stripe.Checkout.Session) {
   const orderId = session.metadata?.order_id;
   if (!orderId) throw new Error("El evento no contiene order_id.");
-  const db = getAdminDb();
-  await db.update("customer_orders", { id: orderId }, {
-    status: "paid",
-    customer_email: session.customer_details?.email || session.customer_email,
-    payment_reference: session.id,
-    metadata: { stripe_payment_intent: session.payment_intent },
-  });
-  await db.insert("finance_events", {
-    type: "sale", order_id: orderId, amount_cents: session.amount_total || 0,
-    currency: (session.currency || "eur").toUpperCase(), provider: "stripe",
-    provider_event_id: `checkout:${session.id}`, metadata: { payment_status: session.payment_status },
+  if (session.payment_status !== "paid") throw new Error("Stripe no confirmó el pago.");
+  await completePaidOrder({
+    orderId,
+    provider: "stripe",
+    providerEventId: `stripe:checkout:${session.id}`,
+    amountCents: session.amount_total || 0,
+    currency: session.currency || "eur",
+    customerEmail: session.customer_details?.email || session.customer_email,
+    metadata: {
+      stripe_checkout_session: session.id,
+      stripe_payment_intent: session.payment_intent,
+      payment_status: session.payment_status,
+    },
   });
 }
 

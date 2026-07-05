@@ -44,7 +44,7 @@ function muapiBase() {
 }
 
 function muapiHeaders(json = true) {
-  const headers: Record<string, string> = { Authorization: `Bearer ${requiredEnv("MUAPI_API_KEY")}` };
+  const headers: Record<string, string> = { "x-api-key": requiredEnv("MUAPI_API_KEY") };
   if (json) headers["Content-Type"] = "application/json";
   return headers;
 }

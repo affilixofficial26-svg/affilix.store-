@@ -37,6 +37,6 @@ export async function POST(req: NextRequest) {
   clearLoginFailures(lockKey);
   const url = new URL(redirectTo.startsWith("/") ? redirectTo : "/dashboard", req.url);
   const res = NextResponse.redirect(url, 303);
-  setAdminSessionCookie(res);
+  setAdminSessionCookie(res, email);
   return res;
 }

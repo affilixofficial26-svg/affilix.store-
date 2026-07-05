@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { verifyAdminSession } from "@/lib/admin-auth";
 import { applySecurityHeaders, getRequestIp, isAllowedOrigin, looksLikeBot, rateLimit } from "@/lib/proxy-security";
 
 const STORE_HOSTS = new Set(["store.affilix.es", "www.store.affilix.es", "affilix.store", "www.affilix.store"]);
@@ -20,6 +21,19 @@ const STORE_PUBLIC_ROUTES = [
   "/legal",
   "/soporte",
   "/contacto",
+];
+
+const ADMIN_API_PREFIXES = [
+  "/api/admin/",
+  "/api/accounts/",
+  "/api/ai/",
+  "/api/catalog/",
+  "/api/dashboard/",
+  "/api/live-tests/",
+  "/api/marketing/",
+  "/api/muapi/",
+  "/api/products/",
+  "/api/settings/",
 ];
 
 function isStoreHost(req: NextRequest) {
@@ -74,6 +88,13 @@ export function proxy(req: NextRequest) {
     if (looksLikeBot(req)) return applySecurityHeaders(NextResponse.json({ error: "Solicitud bloqueada" }, { status: 403 }), req);
     const limited = rateLimit(`${getRequestIp(req)}:${req.nextUrl.pathname}`, 60, 60_000);
     if (!limited.allowed) return applySecurityHeaders(NextResponse.json({ error: "Demasiadas solicitudes" }, { status: 429 }), req);
+
+    if (ADMIN_API_PREFIXES.some((prefix) => req.nextUrl.pathname.startsWith(prefix))) {
+      const adminSession = verifyAdminSession(req.cookies.get("affilix_admin")?.value);
+      if (!adminSession) {
+        return applySecurityHeaders(NextResponse.json({ error: "No autorizado." }, { status: 401 }), req);
+      }
+    }
   }
 
   if (req.nextUrl.pathname.startsWith("/affiliate/panel") || req.nextUrl.pathname.startsWith("/affiliate/dashboard")) {
@@ -83,7 +104,7 @@ export function proxy(req: NextRequest) {
   }
 
   if (req.nextUrl.pathname.startsWith("/dashboard")) {
-    const isAdmin = req.cookies.get("affilix_admin")?.value === "true";
+    const isAdmin = Boolean(verifyAdminSession(req.cookies.get("affilix_admin")?.value));
 
     if (!isAdmin) {
       const loginUrl = new URL("/login", req.url);

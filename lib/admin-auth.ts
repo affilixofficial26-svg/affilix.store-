@@ -1,4 +1,59 @@
+import crypto from "node:crypto";
 import { NextResponse } from "next/server";
+
+const ADMIN_COOKIE = "affilix_admin";
+const ADMIN_SESSION_TTL_SECONDS = 60 * 60 * 12;
+
+type AdminSession = {
+  email: string;
+  exp: number;
+};
+
+function adminSessionSecret() {
+  const secret =
+    process.env.ADMIN_SESSION_SECRET ||
+    process.env.CSRF_SECRET ||
+    process.env.ENCRYPTION_KEY;
+  if (!secret || secret.length < 32) {
+    throw new Error("ADMIN_SESSION_SECRET, CSRF_SECRET o ENCRYPTION_KEY debe tener al menos 32 caracteres.");
+  }
+  return secret;
+}
+
+function signAdminPayload(payload: string) {
+  return crypto.createHmac("sha256", adminSessionSecret()).update(payload).digest("base64url");
+}
+
+export function createAdminSession(email: string) {
+  const session: AdminSession = {
+    email: email.trim().toLowerCase(),
+    exp: Math.floor(Date.now() / 1000) + ADMIN_SESSION_TTL_SECONDS,
+  };
+  const payload = Buffer.from(JSON.stringify(session)).toString("base64url");
+  return `${payload}.${signAdminPayload(payload)}`;
+}
+
+export function verifyAdminSession(value?: string | null) {
+  if (!value) return null;
+  const [payload, signature] = value.split(".");
+  if (!payload || !signature) return null;
+  const expected = signAdminPayload(payload);
+  const providedBuffer = Buffer.from(signature);
+  const expectedBuffer = Buffer.from(expected);
+  if (
+    providedBuffer.length !== expectedBuffer.length ||
+    !crypto.timingSafeEqual(providedBuffer, expectedBuffer)
+  ) {
+    return null;
+  }
+  try {
+    const session = JSON.parse(Buffer.from(payload, "base64url").toString("utf8")) as AdminSession;
+    if (!session.email || session.exp <= Math.floor(Date.now() / 1000)) return null;
+    return session;
+  } catch {
+    return null;
+  }
+}
 
 export function getAdminCredentials() {
   const credentials = new Map<string, string>();
@@ -52,12 +107,12 @@ export function verifyAdminCredentials(email: string, password: string) {
   };
 }
 
-export function setAdminSessionCookie(res: NextResponse) {
-  res.cookies.set("affilix_admin", "true", {
+export function setAdminSessionCookie(res: NextResponse, email: string) {
+  res.cookies.set(ADMIN_COOKIE, createAdminSession(email), {
     httpOnly: true,
-    sameSite: "lax",
+    sameSite: "strict",
     secure: process.env.NODE_ENV === "production",
     path: "/",
-    maxAge: 60 * 60 * 24 * 7,
+    maxAge: ADMIN_SESSION_TTL_SECONDS,
   });
 }

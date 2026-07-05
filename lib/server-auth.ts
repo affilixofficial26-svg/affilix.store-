@@ -1,9 +1,10 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
+import { verifyAdminSession } from "@/lib/admin-auth";
 import { isTrustedInternalRequest } from "@/lib/qstash/verify";
 
 export function isAdminRequest(req: NextRequest) {
-  return req.cookies.get("affilix_admin")?.value === "true";
+  return Boolean(verifyAdminSession(req.cookies.get("affilix_admin")?.value));
 }
 
 export function isCronRequest(req: NextRequest) {
