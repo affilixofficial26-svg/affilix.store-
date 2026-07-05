@@ -48,6 +48,11 @@ function normalizeAction(value: unknown, message: string) {
   return "run_full_cycle";
 }
 
+function safeDashboardRedirect(value: unknown) {
+  const redirect = String(value || "/dashboard/agents");
+  return redirect.startsWith("/dashboard") ? redirect : "/dashboard/agents";
+}
+
 async function saveDiscoveredProducts(products: ExternalProduct[]) {
   return saveProfitableProducts(products);
 }
@@ -179,6 +184,7 @@ export async function POST(req: NextRequest) {
     const body = isJson ? await req.json() : Object.fromEntries((await req.formData()).entries());
     const message = String(body.message || "").trim();
     const action = normalizeAction(body.action, message);
+    const returnTo = safeDashboardRedirect(body.return_to);
     const limit = Math.max(1, Math.min(24, Number(body.limit || 10)));
     const userId = body.user_id ? String(body.user_id) : null;
     const db = getAdminDb();
@@ -230,7 +236,7 @@ export async function POST(req: NextRequest) {
       steps,
     };
     if (!isJson) {
-      const url = new URL("/dashboard/ai-agent", req.url);
+      const url = new URL(returnTo, req.url);
       url.searchParams.set("agent", "ok");
       url.searchParams.set("action", action);
       return NextResponse.redirect(url, 303);
@@ -250,7 +256,7 @@ export async function POST(req: NextRequest) {
       // Si Supabase falla, devolvemos el error original al panel.
     }
     if (!isJson) {
-      const url = new URL("/dashboard/ai-agent", req.url);
+      const url = new URL("/dashboard/agents", req.url);
       url.searchParams.set("agent", "error");
       url.searchParams.set("message", message);
       return NextResponse.redirect(url, 303);

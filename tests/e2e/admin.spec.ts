@@ -37,4 +37,12 @@ test.describe("panel admin", () => {
     await page.waitForURL(/dashboard\/live-tests/, { timeout: 30_000 });
     await expect(page.getByText(/Ultima ejecucion visible/i)).toBeVisible();
   });
+
+  test("agentes IA aparecen activos y ejecutables", async ({ page }) => {
+    await loginAdmin(page, "/dashboard/agents");
+    await expect(page.getByRole("heading", { name: /Agentes IA activos/i })).toBeVisible();
+    await expect(page.getByText(/Pendiente de configuracion/i)).toHaveCount(0);
+    await expect(page.getByRole("button", { name: /^Ejecutar$/i }).first()).toBeVisible();
+    await expect(page.getByRole("button", { name: /Ejecutar ciclo completo/i })).toBeVisible();
+  });
 });
