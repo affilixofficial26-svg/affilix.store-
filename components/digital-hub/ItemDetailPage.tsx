@@ -4,6 +4,16 @@ import { HonestEmptyState, PublicShell } from "@/components/digital-hub/PublicSh
 import { getDigitalCatalogItem, getServiceTemplateByCatalogItem } from "@/lib/digital-hub";
 import { BuyButton } from "@/components/checkout/BuyButton";
 
+function publicText(value: string | null | undefined) {
+  return (value || "")
+    .replace(/\bMuAPI\b/gi, "proceso interno")
+    .replace(/\bIA\b/gi, "")
+    .replace(/\bAI\b/gi, "")
+    .replace(/\bAPI\b/gi, "conexion")
+    .replace(/\s{2,}/g, " ")
+    .trim();
+}
+
 export async function ItemDetailPage({ slug, expectedType }: { slug: string; expectedType: "product" | "service" | "kit" | "tool" }) {
   const item = await getDigitalCatalogItem(slug);
   const validTypes = {
@@ -33,23 +43,26 @@ export async function ItemDetailPage({ slug, expectedType }: { slug: string; exp
   const metadata = item.metadata || {};
   const deliveryHours = String(serviceTemplate?.estimated_delivery_hours ?? metadata.turnaround_hours ?? 24);
   const revisions = String(serviceTemplate?.included_revisions ?? serviceTemplate?.revision_limit ?? metadata.revisions ?? 1);
+  const title = publicText(item.title);
+  const category = publicText(item.category || item.item_type.replaceAll("_", " "));
+  const description = publicText(item.description || item.short_description);
 
   return (
     <PublicShell>
       <section className="mx-auto grid max-w-7xl gap-10 px-4 py-14 lg:grid-cols-[1fr_1fr] lg:px-6 lg:py-20">
         <div className="relative aspect-[4/3] overflow-hidden border border-white/10 bg-[#10141e]">
-          {item.image_url ? <Image src={item.image_url} alt={item.title} fill priority sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" /> : <div className="flex h-full items-center justify-center"><Image src="/affilix-mark.svg" alt="" width={110} height={110} className="opacity-60" /></div>}
+          {item.image_url ? <Image src={item.image_url} alt={title} fill priority sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" /> : <div className="flex h-full items-center justify-center"><Image src="/affilix-mark.svg" alt="" width={110} height={110} className="opacity-60" /></div>}
         </div>
         <div className="flex flex-col justify-center">
-          <div className="text-xs font-black uppercase text-[#38bdf8]">{item.category || item.item_type.replaceAll("_", " ")}</div>
-          <h1 className="mt-4 font-display text-4xl font-black leading-tight text-white sm:text-5xl">{item.title}</h1>
-          <p className="mt-5 text-base leading-7 text-slate-300">{item.description || item.short_description}</p>
+          <div className="text-xs font-black uppercase text-[#38bdf8]">{category}</div>
+          <h1 className="mt-4 font-display text-4xl font-black leading-tight text-white sm:text-5xl">{title}</h1>
+          <p className="mt-5 text-base leading-7 text-slate-300">{description}</p>
           <div className="mt-7 text-3xl font-black text-white">{price}</div>
           {serviceTemplate ? (
             <div className="mt-5 grid gap-2 text-sm text-slate-300 sm:grid-cols-3">
               <div className="border border-white/10 bg-white/[.03] p-3"><strong className="block text-white">{deliveryHours}h</strong> entrega estimada</div>
               <div className="border border-white/10 bg-white/[.03] p-3"><strong className="block text-white">{revisions}</strong> revisiones</div>
-              <div className="border border-white/10 bg-white/[.03] p-3"><strong className="block text-white">MuAPI</strong> proveedor IA</div>
+              <div className="border border-white/10 bg-white/[.03] p-3"><strong className="block text-white">Revisado</strong> proceso interno</div>
             </div>
           ) : null}
           {isExternal ? (
@@ -76,13 +89,13 @@ export async function ItemDetailPage({ slug, expectedType }: { slug: string; exp
                 );
               })}
             </div>
-            <p className="mt-4 text-xs leading-5 text-slate-400">El briefing se recoge durante el pedido y queda asociado al workflow del servicio.</p>
+            <p className="mt-4 text-xs leading-5 text-slate-400">El briefing se recoge durante el pedido y queda asociado al proceso de produccion.</p>
           </div>
           <div className="border border-white/10 bg-[#10141e] p-6">
             <h2 className="font-display text-2xl font-black text-white">Que incluye</h2>
             <ul className="mt-4 space-y-3 text-sm leading-6 text-slate-300">
-              <li>Workflow MuAPI configurado y trazable.</li>
-              <li>Aprobacion humana incluida antes de la entrega final.</li>
+              <li>Proceso de produccion configurado y trazable.</li>
+              <li>Revision humana incluida antes de la entrega final.</li>
               <li>Entrega digital con token y email.</li>
               <li>Licencia comercial estandar.</li>
             </ul>

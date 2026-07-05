@@ -3,16 +3,16 @@ import { getDigitalHubCatalog } from "@/lib/digital-hub";
 
 export const dynamic = "force-dynamic";
 
-export default async function AiServicesPage() {
+export default async function CreativeServicesPage() {
   const catalog = await getDigitalHubCatalog();
   return (
     <CatalogPage
-      eyebrow="Produccion asistida"
-      title="Servicios IA con una entrega clara y un proceso controlado."
-      description="Diseno, video, texto, web, musica y marketing organizados como servicios, con datos de entrada, ejecucion y entrega."
+      eyebrow="Produccion creativa"
+      title="Servicios digitales con entrega clara y proceso controlado."
+      description="Diseno, video, texto, web, musica y marketing organizados como servicios, con briefing, revision y entrega final."
       items={catalog.services}
-      emptyTitle="Estamos actualizando el catalogo"
-      emptyMessage="Recuperando servicios, vuelve en unos segundos."
+      emptyTitle="Catalogo en actualizacion"
+      emptyMessage="Estamos revisando los servicios activos. Vuelve en unos segundos."
     />
   );
 }

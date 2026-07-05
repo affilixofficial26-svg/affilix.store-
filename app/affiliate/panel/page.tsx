@@ -79,6 +79,16 @@ function platformLabel(platform: Platform | string) {
   return String(platform).replace(/_/g, " ").replace(/\b\w/g, (letter) => letter.toUpperCase());
 }
 
+function publicProductText(value: string | null | undefined) {
+  return (value || "")
+    .replace(/\bMuAPI\b/gi, "proceso interno")
+    .replace(/\bIA\b/gi, "")
+    .replace(/\bAI\b/gi, "")
+    .replace(/\bAPI\b/gi, "conexion")
+    .replace(/\s{2,}/g, " ")
+    .trim();
+}
+
 function productScore(product: MainAffiliateProduct) {
   const clicks = Number(product.total_clicks || 0) * 3;
   const sales = Number(product.sales_count || 0) * 24;
@@ -169,7 +179,7 @@ function notificationTone(type: string) {
 const messages: Record<string, { tone: string; text: string }> = {
   ready: { tone: "border-emerald-500/40 bg-emerald-500/10 text-emerald-200", text: "Producto publicado en la web principal con tu enlace afiliado." },
   "published-own": { tone: "border-emerald-500/40 bg-emerald-500/10 text-emerald-200", text: "Producto publicado o actualizado en tu web afiliada." },
-  provider: { tone: "border-amber-500/40 bg-amber-500/10 text-amber-100", text: "Ese producto pertenece a un proveedor que no esta conectado en el panel principal." },
+  provider: { tone: "border-amber-500/40 bg-amber-500/10 text-amber-100", text: "Ese producto pertenece a una plataforma que no esta conectada en el panel principal." },
   missing: { tone: "border-red-500/40 bg-red-500/10 text-red-200", text: "Ese producto ya no esta disponible." },
   ok: { tone: "border-emerald-500/40 bg-emerald-500/10 text-emerald-200", text: "Ajustes guardados correctamente." },
   "close-missing": { tone: "border-red-500/40 bg-red-500/10 text-red-200", text: "Para cerrar la cuenta debes confirmar y seleccionar un motivo." },
@@ -314,7 +324,7 @@ export default async function AffiliatePanelPage({ searchParams }: { searchParam
               <div>
                 <h2 className="font-display text-xl font-bold">Panel de publicaciones</h2>
                 <p className="mt-2 max-w-3xl text-sm leading-6 text-[var(--text-secondary)]">
-                  Usa productos de proveedores conectados en el panel principal. Puedes publicarlos en la web principal AFFILIX o copiarlos a tu web afiliada.
+                  Usa productos de plataformas conectadas en el panel principal. Puedes publicarlos en la web principal AFFILIX o copiarlos a tu web afiliada.
                 </p>
               </div>
               <div className="rounded-lg border border-[var(--border)] bg-[var(--bg-elevated)] px-3 py-2 text-right">
@@ -330,7 +340,7 @@ export default async function AffiliatePanelPage({ searchParams }: { searchParam
                 {categories.map((category) => <option key={category.slug} value={category.slug}>{category.name}</option>)}
               </select>
               <select className="input" name="proveedor" defaultValue={params.proveedor || ""}>
-                <option value="">Todos los proveedores</option>
+                <option value="">Todas las plataformas</option>
                 {providers.map((provider) => <option key={provider.platform} value={provider.platform}>{provider.name}</option>)}
               </select>
               <select className="input" name="orden" defaultValue={params.orden || "rentables"}>
@@ -360,14 +370,14 @@ export default async function AffiliatePanelPage({ searchParams }: { searchParam
                 return (
                   <article key={product.id} className="overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--bg-elevated)]">
                     <div className="aspect-[4/3] bg-[var(--bg-input)]">
-                      <img className="h-full w-full object-cover" src={product.image_url || "/placeholder-product.svg"} alt={product.ai_title || product.title} />
+                      <img className="h-full w-full object-cover" src={product.image_url || "/placeholder-product.svg"} alt={publicProductText(product.title)} />
                     </div>
                     <div className="p-4">
                       <div className="flex items-center justify-between gap-3">
                         <span className="font-mono text-[10px] uppercase tracking-[.14em] text-[var(--accent-gold)]">{platformLabel(product.platform)}</span>
                         <span className="rounded-full bg-[var(--bg-input)] px-2 py-1 text-[10px] text-[var(--text-secondary)]">{product.category || "Producto"}</span>
                       </div>
-                      <h3 className="mt-2 line-clamp-2 min-h-10 text-sm font-bold leading-5">{product.ai_title || product.title}</h3>
+                      <h3 className="mt-2 line-clamp-2 min-h-10 text-sm font-bold leading-5">{publicProductText(product.title)}</h3>
                       <div className="mt-3 grid grid-cols-3 gap-2 text-center text-[11px] text-[var(--text-secondary)]">
                         <div className="rounded-lg bg-[var(--bg-input)] p-2"><div className="font-mono text-white">{Number(product.total_clicks || 0)}</div><div>vistas</div></div>
                         <div className="rounded-lg bg-[var(--bg-input)] p-2"><div className="font-mono text-white">{Number(product.sales_count || 0)}</div><div>ventas</div></div>
@@ -397,7 +407,7 @@ export default async function AffiliatePanelPage({ searchParams }: { searchParam
 
             {!catalogProducts.length ? (
               <div className="mt-5 rounded-xl border border-[var(--border)] bg-[var(--bg-elevated)] p-6 text-center text-sm text-[var(--text-secondary)]">
-                No hay productos disponibles con esos filtros o no hay proveedores conectados en el panel principal.
+                No hay productos disponibles con esos filtros o no hay plataformas conectadas en el panel principal.
               </div>
             ) : null}
           </section>
@@ -426,7 +436,7 @@ export default async function AffiliatePanelPage({ searchParams }: { searchParam
                 <select className="input" name="source_product_id" required>
                   <option value="">Selecciona producto para promocionar</option>
                   {mainProducts.slice(0, 80).map((product) => (
-                    <option key={product.id} value={product.id}>{product.ai_title || product.title}</option>
+                    <option key={product.id} value={product.id}>{publicProductText(product.title)}</option>
                   ))}
                 </select>
                 <select className="input" name="meta_account_mode" required>
@@ -446,10 +456,10 @@ export default async function AffiliatePanelPage({ searchParams }: { searchParam
                   <div className="text-sm font-bold">Mi propia cuenta Meta</div>
                   <p className="mt-1 text-xs leading-5 text-[var(--text-secondary)]">Solo rellena estos campos si eliges usar tu propia cuenta Meta. Si usas AFFILIX, se usa la cuenta oficial conectada en el panel principal.</p>
                   <div className="mt-3 grid gap-2">
-                    <input className="input" name="own_access_token" placeholder="Meta access token propio" />
-                    <input className="input" name="own_ad_account_id" defaultValue={ownMetaAccount?.ad_account_id || ""} placeholder="Ad account ID propio / act_..." />
-                    <input className="input" name="own_page_id" defaultValue={ownMetaAccount?.page_id || ""} placeholder="Page ID propio" />
-                    <input className="input" name="own_pixel_id" placeholder="Pixel ID propio opcional" />
+                    <input className="input" name="own_access_token" placeholder="Codigo de conexion Meta" />
+                    <input className="input" name="own_ad_account_id" defaultValue={ownMetaAccount?.ad_account_id || ""} placeholder="Cuenta publicitaria Meta" />
+                    <input className="input" name="own_page_id" defaultValue={ownMetaAccount?.page_id || ""} placeholder="Pagina Meta" />
+                    <input className="input" name="own_pixel_id" placeholder="Pixel Meta opcional" />
                   </div>
                 </div>
                 <button className="btn btn-primary w-full" type="submit">Crear promocion Meta</button>
