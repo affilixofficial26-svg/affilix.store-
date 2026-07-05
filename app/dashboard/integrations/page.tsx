@@ -58,7 +58,7 @@ export default function IntegrationsPage() {
                   : "border-amber-400/30 bg-amber-400/10 text-amber-200"
               }`}>
                 {integration.ready ? <CheckCircle2 className="h-3.5 w-3.5" /> : <CircleAlert className="h-3.5 w-3.5" />}
-                {integration.ready ? "Conectado" : "Pendiente"}
+                {integration.ready ? "Conectado" : "Checklist"}
               </span>
             </div>
             <div className="mt-5 flex items-center gap-2 border-t border-white/10 pt-4 text-xs text-[var(--text-muted)]">

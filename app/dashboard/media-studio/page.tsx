@@ -29,7 +29,7 @@ export default async function MediaStudioPage() {
           <div className="font-mono text-xs font-bold uppercase tracking-[0.18em] text-[var(--accent-gold)]">MuAPI</div>
           <h1 className="mt-2 font-display text-3xl font-bold">Media Studio</h1>
           <p className="mt-2 max-w-3xl text-sm leading-6 text-[var(--text-secondary)]">
-            Genera imagen, video, audio y assets multimedia. Cada ejecucion queda registrada en Supabase y se re-aloja en storage privado.
+            Genera imagen, video, audio y assets multimedia. El resultado final aparece en Jobs de Media Studio, se guarda en muapi_jobs.output_urls y, cuando MuAPI entrega archivo descargable, AFFILIX lo copia a storage privado.
           </p>
         </div>
         <div className="surface px-4 py-3 text-sm">
@@ -85,13 +85,13 @@ export default async function MediaStudioPage() {
         </form>
 
         <aside className="surface space-y-4 p-5">
-          <h2 className="font-display text-xl font-bold">Acciones</h2>
+          <h2 className="font-display text-xl font-bold">Donde se entrega</h2>
           <Link className="btn w-full justify-center" href="/dashboard/media-studio/jobs">Ver historial de jobs</Link>
           <form action="/api/internal/muapi/sync-models" method="post">
             <button className="btn w-full" type="submit">Sincronizar catalogo</button>
           </form>
           <div className="rounded-lg border border-[var(--border)] p-4 text-xs leading-5 text-[var(--text-secondary)]">
-            Los endpoints admin requieren sesion AFFILIX. Los crons internos requieren `CRON_SECRET`.
+            Flujo: escribes prompt, generas con MuAPI, revisas el job, descargas el output o lo usas dentro de un producto, servicio o campana.
           </div>
         </aside>
       </section>

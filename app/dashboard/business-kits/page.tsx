@@ -13,11 +13,11 @@ export default async function BusinessKitsPage() {
       description="Packs por vertical con logo, flyer, posts, textos, landing copy, catalogo, prompts y campanas."
       items={items}
       itemTypes={["business_kit"]}
-      emptyTitle="Aun no hay kits de negocio"
-      emptyMessage="Crea kits por sector solo cuando tengas componentes reales, precio, alcance y proceso de entrega definido."
+      emptyTitle="Centro de kits de negocio"
+      emptyMessage="Aqui se preparan kits por sector con piezas reales: logo, flyers, posts, copies, prompts, landing copy y campanas."
       actions={[{ label: "Crear kit", href: "/dashboard/catalog", kind: "primary" }]}
-      agent={{ name: "BusinessKitAgent", status: canGenerate ? "active" : "pending", description: "Propone piezas por vertical y prepara borradores con MuAPI." }}
-      pending={canGenerate ? [] : ["MuAPI debe estar disponible para texto e imagen antes de generar piezas del kit."]}
+      agent={{ name: "BusinessKitAgent", status: "active", description: "Propone piezas por vertical y prepara borradores con MuAPI cuando el motor esta disponible." }}
+      pending={canGenerate ? ["Motor IA texto+imagen disponible para generar piezas del kit."] : ["Modo visible activo. Para generacion real con coste, conecta MuAPI texto+imagen."]}
     />
   );
 }

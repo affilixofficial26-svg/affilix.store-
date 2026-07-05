@@ -23,7 +23,7 @@ export function ProductCard({ product }: { product: AffiliateProduct }) {
       <div className="p-3">
         <div className="font-mono text-xs uppercase text-[var(--accent-gold)]">{product.platform}</div>
         <div className={`mt-2 rounded-full px-2.5 py-1 text-center text-xs font-bold ${publicReady ? "bg-emerald-500/15 text-emerald-300" : "bg-[var(--accent-gold-glow)] text-[var(--accent-gold)]"}`}>
-          {publicReady ? "Visible en tienda" : "Pendiente de foto"}
+          {publicReady ? "Visible en tienda" : "Necesita foto"}
         </div>
         <h3 className="mt-2 line-clamp-2 min-h-10 font-display text-base font-bold">{product.ai_title || product.title}</h3>
         <div className="mt-2 flex items-center justify-between gap-3">

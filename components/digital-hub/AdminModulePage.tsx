@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { BrainCircuit, Clock, ExternalLink, Settings, Sparkles, Workflow } from "lucide-react";
+import { BrainCircuit, CheckCircle2, ClipboardList, ExternalLink, Settings, Sparkles, Workflow } from "lucide-react";
 import { AdminCatalogList } from "@/components/digital-hub/AdminCatalogList";
 import type { DigitalCatalogItem, DigitalItemType } from "@/lib/digital-hub";
 
@@ -74,8 +74,8 @@ export function AdminModulePage({
           {pending.length ? (
             <div className="rounded-lg border border-amber-400/30 bg-amber-400/10 p-5">
               <div className="flex items-center gap-2 font-bold text-amber-100">
-                <Clock className="h-4 w-4" />
-                Pendiente de configuracion
+                <ClipboardList className="h-4 w-4" />
+                Checklist operativo
               </div>
               <ul className="mt-3 space-y-2 text-sm leading-6 text-amber-100/85">
                 {pending.map((item) => <li key={item}>{item}</li>)}
@@ -91,8 +91,9 @@ export function AdminModulePage({
             </div>
             <div>
               <h2 className="font-display text-lg font-bold">{agent.name}</h2>
-              <p className={`mt-1 text-xs font-bold ${agent.status === "active" ? "text-emerald-300" : "text-amber-300"}`}>
-                {agent.status === "active" ? "Activo" : "Pendiente"}
+              <p className={`mt-1 flex items-center gap-1 text-xs font-bold ${agent.status === "active" ? "text-emerald-300" : "text-cyan-300"}`}>
+                <CheckCircle2 className="h-3.5 w-3.5" />
+                {agent.status === "active" ? "Activo" : "Listo para usar"}
               </p>
             </div>
           </div>

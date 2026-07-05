@@ -12,7 +12,7 @@ function Status({ connected, status }: { connected: boolean; status?: "success" 
     return <span className="rounded-full bg-red-500/15 px-2.5 py-1 text-xs font-bold text-red-300">Fallo</span>;
   }
   return (
-    <span className="rounded-full bg-amber-500/15 px-2.5 py-1 text-xs font-bold text-amber-200">Pendiente</span>
+    <span className="rounded-full bg-cyan-500/15 px-2.5 py-1 text-xs font-bold text-cyan-200">Listo para conectar</span>
   );
 }
 
@@ -74,7 +74,7 @@ export default async function AccountsPage() {
               </form>
 
               <div className={`mt-4 rounded-xl border p-3 text-xs leading-5 ${connected && status === "success" ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-200" : status === "error" ? "border-red-500/30 bg-red-500/10 text-red-200" : "border-amber-500/30 bg-amber-500/10 text-amber-100"}`}>
-                <p className="font-bold">{connected && status === "success" ? "Proveedor listo para productos reales." : "Proveedor pendiente de confirmacion."}</p>
+                <p className="font-bold">{connected && status === "success" ? "Proveedor listo para productos reales." : "Proveedor listo para guardar credenciales y probar conexion."}</p>
                 <p className="mt-1">{account?.last_test_message || "Abre el proveedor, guarda credenciales API y pulsa Probar conexion real."}</p>
                 {updated ? <p className="mt-2 text-[var(--text-secondary)]">Ultima revision: {updated}</p> : null}
               </div>

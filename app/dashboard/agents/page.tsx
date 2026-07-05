@@ -155,7 +155,7 @@ export default async function AgentsPage({
               </div>
             </div>
           )) : (
-            <div className="p-5 text-sm text-[var(--text-secondary)]">Aun no hay ejecuciones registradas. Ejecuta un agente para crear el primer log.</div>
+            <div className="p-5 text-sm text-[var(--text-secondary)]">Ejecuta un agente para crear el primer log visible aqui.</div>
           )}
         </div>
       </section>

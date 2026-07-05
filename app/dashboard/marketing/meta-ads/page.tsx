@@ -25,7 +25,7 @@ function ConnectionStatus({ config }: { config: MetaConfig | null }) {
   if (!missing.length) {
     return <span className="rounded-full bg-emerald-500/15 px-3 py-1 text-xs font-bold text-emerald-300">Lista para probar</span>;
   }
-  return <span className="rounded-full bg-amber-500/15 px-3 py-1 text-xs font-bold text-amber-200">Falta configurar</span>;
+  return <span className="rounded-full bg-cyan-500/15 px-3 py-1 text-xs font-bold text-cyan-200">Checklist</span>;
 }
 
 export default async function MetaAdsPage({

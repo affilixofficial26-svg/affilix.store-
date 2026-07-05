@@ -10,7 +10,7 @@ async function getConfig() {
 }
 
 function Status({ active }: { active?: boolean }) {
-  return <span className={`rounded-full px-2.5 py-1 text-xs font-bold ${active ? "bg-emerald-500/15 text-emerald-300" : "bg-white/5 text-[var(--text-secondary)]"}`}>{active ? "Conectada" : "Pendiente"}</span>;
+  return <span className={`rounded-full px-2.5 py-1 text-xs font-bold ${active ? "bg-emerald-500/15 text-emerald-300" : "bg-white/5 text-[var(--text-secondary)]"}`}>{active ? "Conectada" : "Lista para conectar"}</span>;
 }
 
 export default async function SocialAccountsPage() {

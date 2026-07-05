@@ -11,11 +11,11 @@ export default async function DigitalProductsPage() {
       description="Gestiona PDFs, ZIPs, plantillas, ebooks, packs de prompts y recursos descargables propios."
       items={items}
       itemTypes={["digital_product", "bundle", "lead_magnet"]}
-      emptyTitle="Aun no tienes productos digitales"
-      emptyMessage="Crea el primer PDF, pack, plantilla, ebook o recurso descargable y activa la entrega automatica cuando tengas archivo real."
+      emptyTitle="Centro de productos digitales"
+      emptyMessage="Aqui se crean y editan PDFs, packs, plantillas, ebooks y recursos descargables. Cuando el producto tiene precio y archivo, AFFILIX lo vende y entrega con token seguro."
       actions={[{ label: "Crear producto digital", href: "/dashboard/catalog", kind: "primary" }]}
-      agent={{ name: "DigitalProductAgent", status: "pending", description: "Prepara descripcion, SEO, portada y validacion de entrega. Queda pendiente hasta configurar proveedor IA y storage privado." }}
-      pending={["Configura SUPABASE_STORAGE_BUCKET_DIGITAL_ASSETS para archivos privados."]}
+      agent={{ name: "DigitalProductAgent", status: "active", description: "Prepara descripcion, SEO, portada, archivo y validacion de entrega para cada producto digital." }}
+      pending={["Entrega final: /dashboard/deliveries y /download/[token].", "Archivos privados: bucket digital-products o storage configurado en Supabase."]}
     />
   );
 }

@@ -158,6 +158,29 @@ export default async function HomePage() {
       </section>
 
       <section className="hub-section hub-section-alt">
+        <SectionHeading eyebrow="Mapa de entregas" title="Dónde aparece cada resultado." copy="Esta es la ruta clara para entender qué hace cada módulo y dónde ver el producto final dentro de AFFILIX." />
+        <div className="mx-auto grid max-w-7xl gap-4 px-4 md:grid-cols-2 lg:grid-cols-4 lg:px-6">
+          {[
+            ["Media Studio", "Genera imagen, vídeo, audio y assets con MuAPI.", "Entrega en /dashboard/media-studio/jobs con links de output y assets guardados."],
+            ["Agentes IA", "Ejecutan búsqueda, contenido, imágenes, precios y ciclo completo.", "Entrega logs en /dashboard/agents, /dashboard/automation/logs y cambios en catálogo."],
+            ["Productos digitales", "Vende PDFs, packs, plantillas, ebooks y recursos.", "Entrega al cliente en /download/[token] y al admin en /dashboard/deliveries."],
+            ["Servicios IA", "Recibe pedidos de logos, flyers, vídeo, voz, ebooks y campañas.", "Entrega en pedidos, Media Studio Jobs y Entregas."],
+            ["Pagos", "Stripe y PayPal crean cobro, pedido y evento financiero.", "Se ve en /dashboard/orders, /dashboard/finance y webhooks."],
+            ["Comparador", "Publica comparativas de herramientas IA y SaaS.", "Se ve en /comparador, /herramientas-ia y /tools/[slug]."],
+            ["Marketing", "Genera contenido, calendario, redes y campañas.", "Se ve en /dashboard/marketing y logs de publicación."],
+            ["Afiliados", "Crea enlaces, tracking, ventas y comisiones.", "Se ve en /affiliate/panel y /dashboard/affiliates."],
+          ].map(([title, action, output]) => (
+            <article className="hub-mini-card" key={title}>
+              <Check size={20} className="text-emerald-300" />
+              <h3>{title}</h3>
+              <p>{action}</p>
+              <small className="mt-3 block text-cyan-200">{output}</small>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="hub-section hub-section-alt">
         <SectionHeading eyebrow="Hecho para avanzar" title="Creado para personas que quieren moverse rápido." copy="Recursos y rutas directas para cada forma de crear, vender y crecer." />
         <div className="mx-auto grid max-w-7xl grid-cols-2 gap-3 px-4 sm:grid-cols-3 lg:grid-cols-5 lg:px-6">
           {["Creadores de contenido","Negocios locales","Tiendas online","Músicos","YouTubers","Diseñadores","Agencias","Emprendedores","Afiliados","Vendedores digitales"].map((x,i) => <Link href={i % 3 === 0 ? "/servicios-ia" : i % 3 === 1 ? "/kits-negocio" : "/productos-digitales"} className="hub-audience" key={x}>{x}<ArrowRight size={14}/></Link>)}

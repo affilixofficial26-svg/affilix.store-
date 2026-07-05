@@ -93,7 +93,7 @@ export default async function LiveTestsPage() {
         {kpi("Pasadas", totals.passed, "text-emerald-100")}
         {kpi("Fallidas", totals.failed, "text-red-100")}
         {kpi("Arregladas", totals.fixed, "text-cyan-100")}
-        {kpi("Pendientes", totals.pending, "text-amber-100")}
+        {kpi("En cola", totals.pending, "text-cyan-100")}
         {kpi("Coste MuAPI en pruebas", `$${totals.muapiCost.toFixed(4)}`)}
         {kpi("Emails enviados en pruebas", totals.emails)}
         {kpi("Pedidos test creados", totals.orders)}

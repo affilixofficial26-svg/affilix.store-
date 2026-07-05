@@ -31,7 +31,7 @@ export default async function ProductDetailPage({
         <div className={`mt-4 rounded-lg border p-3 text-sm ${product.is_active && product.image_url ? "border-emerald-500/30 bg-emerald-500/10 text-emerald-300" : "border-[rgba(245,166,35,.35)] bg-[var(--accent-gold-glow)] text-[var(--accent-gold)]"}`}>
           {product.is_active && product.image_url
             ? "Producto visible en la tienda publica con foto real cargada."
-            : "Pendiente de foto: este producto no sale en la tienda publica hasta subir la foto real del proveedor."}
+            : "Necesita foto: este producto no sale en la tienda publica hasta subir la foto real del proveedor."}
         </div>
         <p className="mt-4 text-[var(--text-secondary)]">{product.ai_description || product.description}</p>
         <div className="mt-6 rounded-xl border border-[var(--border)] bg-[var(--bg-elevated)] p-4">

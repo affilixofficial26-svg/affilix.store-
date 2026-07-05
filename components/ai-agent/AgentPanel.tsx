@@ -192,7 +192,7 @@ export function AgentPanel() {
           <div className="rounded-xl border border-[var(--border)] bg-[var(--bg-elevated)] p-4">
             <div className="text-xs font-bold uppercase tracking-[0.14em] text-[var(--text-muted)]">Proveedores</div>
             <div className="mt-2 font-bold">{status?.providers.length ?? 0} conectados</div>
-            <div className="text-xs text-[var(--text-secondary)]">{status?.providers.map((item) => item.platform).slice(0, 4).join(", ") || "Pendiente de conexion real"}</div>
+            <div className="text-xs text-[var(--text-secondary)]">{status?.providers.map((item) => item.platform).slice(0, 4).join(", ") || "Listo para conectar proveedor real"}</div>
           </div>
         </div>
 

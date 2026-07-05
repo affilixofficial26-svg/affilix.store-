@@ -7,7 +7,7 @@ function CapabilityCard({ label, capability }: { label: string; capability: "tex
       <div className="flex items-center justify-between gap-3">
         <p className="text-xs font-bold uppercase text-[var(--text-secondary)]">{label}</p>
         <span className={`rounded-full px-2.5 py-1 text-xs font-bold ${ok ? "bg-emerald-500/15 text-emerald-300" : "bg-amber-500/15 text-amber-200"}`}>
-          {ok ? "Activo" : "Pendiente"}
+          {ok ? "Activo" : "Checklist"}
         </span>
       </div>
       <p className="mt-3 font-mono text-sm">{providerLabel(capability)}</p>
