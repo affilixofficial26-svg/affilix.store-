@@ -13,10 +13,10 @@ export function AffilixLogo({ compact = false, className = "" }: AffilixLogoProp
   return (
     <Image
       className={`${className} object-contain`}
-      src="/brand/logo/affilix-logo-horizontal.png"
+      src="/brand/logo/affilix-logo-approved.png"
       alt="AFFILIX Digital Hub"
-      width={1400}
-      height={460}
+      width={2048}
+      height={512}
       priority
     />
   );

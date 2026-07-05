@@ -10,7 +10,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint . --ext .ts,.tsx --ignore-pattern node_modules --ignore-pattern .next",
-    "db:verify": "node --experimental-strip-types scripts/verify-migrations.ts"
+    "db:verify": "node --experimental-strip-types scripts/verify-migrations.ts",
+    "audit:buttons": "node --experimental-strip-types scripts/audit-buttons.ts"
   },
   "dependencies": {
     "@upstash/qstash": "^2.11.1",

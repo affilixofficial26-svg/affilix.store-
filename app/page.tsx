@@ -175,7 +175,7 @@ export default async function HomePage() {
       <section className="hub-section hub-section-alt">
         <SectionHeading eyebrow="Formas de acceso" title="Elige cómo quieres usar AFFILIX." copy="Compra lo que necesitas hoy o elige una modalidad preparada para un uso continuo." />
         <div className="mx-auto grid max-w-7xl gap-4 px-4 sm:grid-cols-2 lg:grid-cols-5 lg:px-6">
-          {[["Pago único","Compra productos sueltos.","Disponible"],["Créditos IA","Para generar servicios con IA.","En preparación"],["Plan Pro","Para creadores frecuentes.","En preparación"],["Plan Business","Para equipos y negocios.","En preparación"],["Afiliado","Promociona y gana comisiones.","Disponible"]].map(([title,copy,status]) => <article className="hub-plan" key={title}><h3>{title}</h3><p>{copy}</p><span className="hub-status">{status}</span></article>)}
+          {[["Pago único","Compra productos sueltos con licencia y entrega automática.","Disponible"],["Créditos IA","100, 500 o 2.000 créditos para servicios IA.","Disponible"],["Plan Pro","10 servicios IA/mes, 500 créditos y prioridad.","19 EUR/mes"],["Plan Business","50 servicios IA/mes, 3.000 créditos y revisión humana.","79 EUR/mes"],["Afiliado","Promociona y gana comisiones desde el primer euro.","Disponible"]].map(([title,copy,status]) => <article className="hub-plan" key={title}><h3>{title}</h3><p>{copy}</p><span className="hub-status">{status}</span><Link className="mt-4 inline-flex text-sm font-black text-cyan-300" href={title === "Afiliado" ? "/afiliados" : "/planes"}>Empezar <ArrowRight size={14}/></Link></article>)}
         </div>
       </section>
 
@@ -183,15 +183,15 @@ export default async function HomePage() {
         <SectionHeading eyebrow="Preguntas frecuentes" title="Todo lo que necesitas saber." copy="Respuestas directas sobre productos, servicios, herramientas y entregas." />
         <div className="mx-auto max-w-3xl space-y-3 px-4">
           {[
-            ["¿AFFILIX vende productos físicos?","AFFILIX se centra principalmente en productos digitales, servicios IA, kits de negocio y herramientas digitales recomendadas."],
-            ["¿Qué puedo crear con IA?","Logos, flyers, vídeos, guiones, webs, música, campañas, portadas, ebooks, menús y kits de marca, según los servicios activos."],
-            ["¿Los productos digitales se descargan al momento?","Los productos con entrega automática se habilitan tras confirmar el pago."],
-            ["¿Cómo funcionan los servicios IA?","Eliges un servicio, completas la información necesaria y el pedido queda preparado para generación, revisión y entrega."],
-            ["¿Puedo usar los recursos comercialmente?","Cada producto indica su licencia y si incluye uso comercial."],
-            ["¿Cómo funcionan las herramientas recomendadas?","AFFILIX analiza y compara herramientas; algunos enlaces externos pueden generar una comisión sin coste adicional para ti."],
-            ["¿Puedo ser afiliado?","Sí. Puedes solicitar acceso al programa y gestionar enlaces, clics y comisiones desde tu panel."],
-            ["¿Cómo recibo mi compra?","Mediante descarga, acceso, email o entrega del servicio, según el tipo de compra."],
-            ["¿Qué pasa si una entrega falla?","El sistema registra la incidencia para reintentar la entrega o permitir que soporte la resuelva."],
+            ["¿AFFILIX vende productos físicos?","No. AFFILIX es una plataforma 100% digital: productos descargables, servicios generados con IA, kits por sector y herramientas SaaS recomendadas. No hay stock, logística ni envíos físicos."],
+            ["¿Qué puedo crear con IA?","Logos, flyers, packs para Instagram, guiones, vídeos promocionales, música, portadas, ebooks, menús, imágenes de producto, campañas y kits de marca completos."],
+            ["¿Los productos digitales se descargan al momento?","Sí. Cuando Stripe confirma el pago, AFFILIX genera una entrega segura y el enlace aparece en checkout y por email si el canal está activo."],
+            ["¿Cómo funcionan los servicios IA?","Eliges un servicio, rellenas el formulario, pagas y AFFILIX ejecuta la generación conectada a MuAPI. Si requiere revisión humana, queda en cola antes de entrega."],
+            ["¿Puedo usar los recursos comercialmente?","Depende de la licencia indicada en cada ficha: personal, comercial estándar o extendida. La licencia acompaña la entrega."],
+            ["¿Cómo funcionan las herramientas recomendadas?","Curamos herramientas IA y SaaS. Algunos enlaces son afiliados y pueden generar comisión para AFFILIX sin coste añadido para ti."],
+            ["¿Puedo ser afiliado?","Sí. Solicitas acceso, te aprobamos, generas enlaces personalizados y cobras comisiones con periodo de retención para cubrir reembolsos."],
+            ["¿Cómo recibo mi compra?","Por descarga segura, email o entrega del servicio, según el tipo de producto. Las descargas usan token con caducidad y límite de usos."],
+            ["¿Qué pasa si una entrega falla?","Abre un ticket en soporte. Reintentamos, regeneramos el enlace o revisamos reembolso si el fallo es nuestro."],
           ].map(([q,a]) => <details className="hub-faq" key={q}><summary>{q}<ChevronDown size={18}/></summary><p>{a}</p></details>)}
         </div>
       </section>
