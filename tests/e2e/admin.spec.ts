@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { loginAdmin } from "./admin-auth";
 
 const adminRoutes = [
   "/dashboard",
@@ -20,12 +21,9 @@ const adminRoutes = [
 ];
 
 test.describe("panel admin", () => {
-  test.beforeEach(async ({ context, baseURL }) => {
-    await context.addCookies([{ name: "affilix_admin", value: "true", url: baseURL || "http://localhost:3004" }]);
-  });
-
   for (const route of adminRoutes) {
     test(`ruta admin ${route}`, async ({ page }) => {
+      await loginAdmin(page, route);
       const response = await page.goto(route, { waitUntil: "domcontentloaded" });
       expect(response?.status(), route).toBeLessThan(500);
       await expect(page.locator("body")).not.toContainText(/Próximamente|Proximamente/);
@@ -33,6 +31,7 @@ test.describe("panel admin", () => {
   }
 
   test("live-tests registra ejecucion publica", async ({ page }) => {
+    await loginAdmin(page, "/dashboard/live-tests");
     await page.goto("/dashboard/live-tests", { waitUntil: "domcontentloaded" });
     await page.getByRole("button", { name: /Ejecutar solo publicas/i }).click();
     await page.waitForURL(/dashboard\/live-tests/, { timeout: 30_000 });
