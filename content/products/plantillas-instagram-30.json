@@ -1,0 +1,49 @@
+{
+  "slug": "plantillas-instagram-30",
+  "item_type": "digital_product",
+  "title": "30 Plantillas Instagram Editables 2026",
+  "short_description": "Pack editable para carruseles, promos, testimonios y lanzamientos con estilo actual.",
+  "niche": "Creators",
+  "price_eur": 19,
+  "currency": "EUR",
+  "pages_target": 30,
+  "priority": "alta",
+  "formats": ["pdf_instrucciones", "figma_duplicable", "canva_duplicable", "mockups_png"],
+  "status_after_build": "pending_review",
+  "cover": {
+    "provider": "muapi",
+    "endpoint": "flux-dev-image",
+    "aspect": "1:1",
+    "size": "2000x2000",
+    "prompt": "Cover mockup: iPhone displaying Instagram feed with a stylish grid of 6 posts in dark theme with amber accents, floating slightly rotated, dark studio background, cinematic lighting, product photography style, square."
+  },
+  "content_plan": {
+    "template_categories": [
+      "Educativas",
+      "Testimonios y prueba social",
+      "Ofertas y promos",
+      "Lanzamiento de producto",
+      "Detras de camara y storytelling",
+      "Motivacionales y frases"
+    ],
+    "templates_per_category": 5,
+    "mockup_generation": "Generar 30 fondos/mockups cuadrados 1080x1080 con MuAPI flux-dev. La estructura editable se compone despues en Figma/Canva.",
+    "guide_chapters": [
+      "Que incluye el pack",
+      "Como duplicar en Canva y Figma",
+      "Guia rapida de tipografia y color",
+      "Ideas de post por categoria",
+      "Preguntas frecuentes"
+    ]
+  },
+  "delivery": {
+    "bucket": "digital-products",
+    "license": "uso_comercial_personal_y_cliente",
+    "requires_download_token": true
+  },
+  "stripe": {
+    "tax_behavior": "exclusive",
+    "currency": "eur",
+    "unit_amount": 1900
+  }
+}

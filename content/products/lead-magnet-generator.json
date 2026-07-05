@@ -1,0 +1,46 @@
+{
+  "slug": "lead-magnet-generator",
+  "item_type": "digital_product",
+  "title": "Generador de Lead Magnets con IA",
+  "short_description": "Sistema para disenar, escribir y lanzar lead magnets con prompts y checklist.",
+  "niche": "Marketing",
+  "price_eur": 12,
+  "currency": "EUR",
+  "pages_target": 30,
+  "priority": "media",
+  "formats": ["pdf", "biblioteca_prompts", "notion_template"],
+  "status_after_build": "pending_review",
+  "cover": {
+    "provider": "muapi",
+    "endpoint": "flux-dev-image",
+    "aspect": "4:5",
+    "size": "2000x2600",
+    "prompt": "Cover: magnetic icon attracting geometric shapes as leads visualization, dark background with amber magnetism lines, minimal, editorial, no text overlay, vertical."
+  },
+  "content_plan": {
+    "chapters": [
+      "Que es un lead magnet en 2026",
+      "8 formatos que funcionan con ejemplo real de cada uno",
+      "Framework PICO para disenar el lead magnet",
+      "20 prompts para investigar audiencia, generar contenido, disenar portada, crear landing y email de entrega",
+      "Checklist de lanzamiento"
+    ],
+    "prompt_groups": {
+      "audiencia": 4,
+      "contenido": 4,
+      "portada": 4,
+      "landing": 4,
+      "email_entrega": 4
+    }
+  },
+  "delivery": {
+    "bucket": "digital-products",
+    "license": "uso_comercial_personal_y_cliente",
+    "requires_download_token": true
+  },
+  "stripe": {
+    "tax_behavior": "exclusive",
+    "currency": "eur",
+    "unit_amount": 1200
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "slug": "pack-prompts-marketing-100",
+  "item_type": "digital_product",
+  "title": "100 Prompts de Marketing con IA",
+  "short_description": "Biblioteca premium de prompts listos para marketing, ventas, SEO, anuncios y automatizacion.",
+  "niche": "Prompts IA",
+  "price_eur": 12,
+  "currency": "EUR",
+  "pages_target": 45,
+  "priority": "alta",
+  "formats": ["pdf_interactivo", "txt_copiables", "notion_duplicable"],
+  "status_after_build": "pending_review",
+  "cover": {
+    "provider": "muapi",
+    "endpoint": "flux-dev-image",
+    "aspect": "1:1",
+    "size": "2000x2000",
+    "prompt": "Cover for a digital product titled \"100 Prompts de Marketing con IA\". Style: editorial premium, dark background #0A0A0A, amber/gold accent #F59E0B, no text, abstract geometric composition suggesting AI and marketing, high contrast, square, print-ready."
+  },
+  "content_plan": {
+    "intro": "Explicar que modelo usar segun tarea: Claude para razonamiento, GPT para creatividad, Gemini para investigacion. Incluir metodo de iteracion y errores frecuentes.",
+    "categories": [
+      "Investigacion de mercado",
+      "Avatar de cliente",
+      "Copywriting de landings",
+      "Email marketing",
+      "Anuncios Meta",
+      "Contenido para redes",
+      "SEO",
+      "Estrategia de negocio",
+      "Analisis de datos",
+      "Automatizacion y procesos"
+    ],
+    "prompts_per_category": 10,
+    "bonus_meta_prompts": 10,
+    "prompt_generation_brief": "Genera un prompt de {categoria} para {caso_de_uso}. Formato: rol, contexto, objetivo, restricciones y formato de salida. Debe ser copiable y funcionar con Claude, GPT-4o y Gemini. Longitud 80-150 palabras. Sin bullets internos; prompt como bloque listo para pegar. Despues incluye un parrafo breve: Cuando usarlo / Que esperar."
+  },
+  "delivery": {
+    "bucket": "digital-products",
+    "license": "uso_comercial_personal_y_cliente",
+    "requires_download_token": true
+  },
+  "stripe": {
+    "tax_behavior": "exclusive",
+    "currency": "eur",
+    "unit_amount": 1200
+  }
+}

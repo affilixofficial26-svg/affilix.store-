@@ -1,0 +1,45 @@
+{
+  "slug": "guia-meta-ads-2026",
+  "item_type": "digital_product",
+  "title": "Meta Ads 2026 - Playbook completo",
+  "short_description": "Playbook avanzado para estructurar, medir, escalar y optimizar campanas Meta Ads.",
+  "niche": "Ads y growth",
+  "price_eur": 19,
+  "currency": "EUR",
+  "pages_target": 80,
+  "priority": "alta",
+  "formats": ["pdf"],
+  "status_after_build": "pending_review",
+  "cover": {
+    "provider": "muapi",
+    "endpoint": "flux-dev-image",
+    "aspect": "4:5",
+    "size": "2000x2600",
+    "prompt": "Cover for advanced Meta Ads playbook, dark tech aesthetic, blue-to-purple gradient accent hinting social ads without logos, abstract data visualization elements, premium enterprise feel, no text overlay, vertical."
+  },
+  "content_plan": {
+    "part_rules": "Cada parte debe ocupar 6-8 paginas, incluir ejemplos numericos concretos y screenshots simulados del Ads Manager generados despues con HTML/Puppeteer.",
+    "parts": [
+      "Como funciona el algoritmo de Meta en 2026: aprendizaje, senales y atribucion.",
+      "Estructura de cuenta que escala: CBO, Advantage+ y testing.",
+      "Investigacion de publico y angulos.",
+      "Creatividades que ganan: 20 patrones probados.",
+      "Copywriting de anuncios: hooks, CTAs y variantes.",
+      "Configuracion tecnica: pixel, eventos y CAPI.",
+      "Interpretacion de metricas y decision de escala.",
+      "Escalar sin romper el ROAS.",
+      "Solucion de problemas: caidas, aprendizaje y disapproval.",
+      "12 checklists imprimibles."
+    ]
+  },
+  "delivery": {
+    "bucket": "digital-products",
+    "license": "uso_comercial_personal",
+    "requires_download_token": true
+  },
+  "stripe": {
+    "tax_behavior": "exclusive",
+    "currency": "eur",
+    "unit_amount": 1900
+  }
+}

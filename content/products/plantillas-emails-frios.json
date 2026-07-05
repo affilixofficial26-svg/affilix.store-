@@ -1,0 +1,41 @@
+{
+  "slug": "plantillas-emails-frios",
+  "item_type": "digital_product",
+  "title": "25 Plantillas de Email en Frio que convierten",
+  "short_description": "Emails B2B listos para adaptar: primer contacto, seguimiento, llamada, reactivacion y cierre.",
+  "niche": "B2B y sales",
+  "price_eur": 12,
+  "currency": "EUR",
+  "pages_target": 35,
+  "priority": "media",
+  "formats": ["pdf", "google_docs_duplicable", "txt_por_plantilla"],
+  "status_after_build": "pending_review",
+  "cover": {
+    "provider": "muapi",
+    "endpoint": "flux-dev-image",
+    "aspect": "4:5",
+    "size": "2000x2600",
+    "prompt": "Cover: minimalist envelope icon with subtle glow, dark background, gold-amber accent, professional B2B aesthetic, no text overlay, vertical."
+  },
+  "content_plan": {
+    "categories": [
+      "Primer contacto B2B",
+      "Seguimiento bump",
+      "Despues de una llamada",
+      "Reactivacion de leads frios",
+      "Cierre con propuesta enviada"
+    ],
+    "templates_per_category": 5,
+    "template_rules": "Cada plantilla debe incluir 3 asuntos, cuerpo de 150-250 palabras, explicacion breve de por que funciona y variables {{nombre}}, {{empresa}}, {{contexto}}."
+  },
+  "delivery": {
+    "bucket": "digital-products",
+    "license": "uso_comercial_personal_y_cliente",
+    "requires_download_token": true
+  },
+  "stripe": {
+    "tax_behavior": "exclusive",
+    "currency": "eur",
+    "unit_amount": 1200
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "slug": "plantilla-notion-crm",
+  "item_type": "digital_product",
+  "title": "Notion CRM para Freelance",
+  "short_description": "Plantilla CRM y guia para gestionar contactos, propuestas, proyectos, facturas y seguimiento.",
+  "niche": "Freelance",
+  "price_eur": 15,
+  "currency": "EUR",
+  "pages_target": 25,
+  "priority": "media",
+  "formats": ["notion_duplicable", "pdf_guia"],
+  "status_after_build": "pending_review",
+  "cover": {
+    "provider": "muapi",
+    "endpoint": "flux-dev-image",
+    "aspect": "1:1",
+    "size": "2000x2000",
+    "prompt": "Cover mockup: laptop screen showing a clean Notion-style database with cards, minimalist workspace, warm daylight, plants blurred in background, cozy productivity aesthetic, square."
+  },
+  "content_plan": {
+    "crm_components": [
+      "Base de contactos relacionada con proyectos",
+      "Base de proyectos con estado, deadline y valor",
+      "Base de propuestas con plantillas",
+      "Base de facturas para seguimiento manual",
+      "Dashboards de pipeline, revenue mensual y tareas de hoy",
+      "Recordatorios basicos de seguimiento"
+    ],
+    "guide_chapters": [
+      "Como duplicar la plantilla",
+      "Setup en 15 minutos",
+      "Mover un lead de contacto a propuesta y proyecto",
+      "Dashboards y que mirar cada semana",
+      "Personalizacion"
+    ],
+    "bonus_note": "Los videos Loom se marcan como bonus por email y no bloquean la primera version."
+  },
+  "delivery": {
+    "bucket": "digital-products",
+    "license": "uso_comercial_personal",
+    "requires_download_token": true
+  },
+  "stripe": {
+    "tax_behavior": "exclusive",
+    "currency": "eur",
+    "unit_amount": 1500
+  }
+}

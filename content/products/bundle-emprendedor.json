@@ -1,0 +1,47 @@
+{
+  "slug": "bundle-emprendedor",
+  "item_type": "bundle",
+  "title": "Bundle Emprendedor",
+  "short_description": "Cinco productos clave para crear, vender y promocionar un negocio digital.",
+  "niche": "Bundle",
+  "price_eur": 39,
+  "currency": "EUR",
+  "pages_target": null,
+  "priority": "alta",
+  "formats": ["bundle_descargas"],
+  "status_after_build": "pending_review",
+  "bundle_items": [
+    "ebook-vender-digitales",
+    "guia-meta-ads-2026",
+    "pack-prompts-marketing-100",
+    "plantillas-emails-frios",
+    "lead-magnet-generator"
+  ],
+  "savings": {
+    "separate_price_eur": 70,
+    "bundle_price_eur": 39,
+    "saved_eur": 31,
+    "saved_percent": 44
+  },
+  "cover": {
+    "provider": "muapi",
+    "endpoint": "flux-dev-image",
+    "aspect": "1:1",
+    "size": "2000x2000",
+    "prompt": "Cover: exploded view of 5 stacked digital books and product covers arranged dynamically, dark studio background, gold accents, cinematic lighting, premium bundle aesthetic, no text overlay, square."
+  },
+  "content_plan": {
+    "build_mode": "compose_existing_products_only",
+    "delivery_rule": "Al comprar, generar entregas y download_tokens para los 5 productos hijos."
+  },
+  "delivery": {
+    "bucket": "digital-products",
+    "license": "segun_producto_incluido",
+    "requires_download_token": true
+  },
+  "stripe": {
+    "tax_behavior": "exclusive",
+    "currency": "eur",
+    "unit_amount": 3900
+  }
+}

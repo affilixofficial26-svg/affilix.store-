@@ -1,0 +1,51 @@
+{
+  "slug": "pack-portadas-musicales-20",
+  "item_type": "digital_product",
+  "title": "20 Portadas Musicales IA",
+  "short_description": "Pack de portadas 3000x3000 listas para adaptar a lanzamientos musicales.",
+  "niche": "Musica",
+  "price_eur": 9,
+  "currency": "EUR",
+  "pages_target": 8,
+  "priority": "media",
+  "formats": ["png_3000x3000", "pdf_guia"],
+  "status_after_build": "pending_review",
+  "cover": {
+    "provider": "muapi",
+    "endpoint": "flux-dev-image",
+    "aspect": "1:1",
+    "size": "2000x2000",
+    "prompt": "Cover pack mockup: grid of 6 premium AI music cover artworks on a dark studio background with title-safe area, cinematic lighting, gold accents, premium bundle aesthetic, square."
+  },
+  "content_plan": {
+    "image_generation": {
+      "provider": "muapi",
+      "endpoint": "flux-dev-image",
+      "output_size": "3000x3000",
+      "styles": [
+        "urban trap with abstract portraits",
+        "indie folk with atmospheric landscapes",
+        "minimal geometric electronic",
+        "vibrant colorful pop",
+        "cinematic orchestral"
+      ],
+      "variants_per_style": 4
+    },
+    "guide_chapters": [
+      "Uso comercial y limites de licencia",
+      "Como adaptar la portada a tu artista",
+      "Como preparar archivo para Spotify y Apple Music",
+      "Checklist antes de publicar"
+    ]
+  },
+  "delivery": {
+    "bucket": "digital-products",
+    "license": "uso_comercial_personal_y_cliente",
+    "requires_download_token": true
+  },
+  "stripe": {
+    "tax_behavior": "exclusive",
+    "currency": "eur",
+    "unit_amount": 900
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "slug": "ebook-vender-digitales",
+  "item_type": "digital_product",
+  "title": "Como vender productos digitales en 2026",
+  "short_description": "Guia practica para elegir nicho, validar, crear, vender y escalar productos digitales.",
+  "niche": "Emprendimiento",
+  "price_eur": 15,
+  "currency": "EUR",
+  "pages_target": 60,
+  "priority": "alta",
+  "formats": ["pdf"],
+  "status_after_build": "pending_review",
+  "cover": {
+    "provider": "muapi",
+    "endpoint": "flux-dev-image",
+    "aspect": "4:5",
+    "size": "2000x2600",
+    "prompt": "Editorial book cover, dark navy #0A0A0A background with subtle grid texture, gold typography treatment area at top, abstract 3D geometric icon combining currency and growth arrow, premium business book aesthetic, minimal, no text overlay, vertical."
+  },
+  "content_plan": {
+    "chapter_word_target": "800-1200",
+    "chapter_rules": "Cada capitulo debe incluir contexto accionable, un case study nombrable, una checklist final y un grafico simple con datos plausibles.",
+    "chapters": [
+      "El mercado digital en 2026: datos, demanda y oportunidades.",
+      "Elegir tu nicho: framework de 5 filtros.",
+      "Validar antes de crear: encuestas, preventas y entrevistas.",
+      "Elegir formato correcto: PDF, plantilla, Notion, video o membresia.",
+      "Precio: modelos que funcionan y cuando usarlos.",
+      "Plataformas comparadas: AFFILIX, Gumroad, Lemon Squeezy y Payhip.",
+      "Anatomia de una landing que convierte.",
+      "Copywriting para productos digitales.",
+      "Traer los primeros 100 clientes: organico y pagado.",
+      "Programa de afiliados: como montarlo bien.",
+      "Automatizacion de entrega y postventa.",
+      "Escalar: bundles, upsells y membresias."
+    ]
+  },
+  "delivery": {
+    "bucket": "digital-products",
+    "license": "uso_comercial_personal",
+    "requires_download_token": true
+  },
+  "stripe": {
+    "tax_behavior": "exclusive",
+    "currency": "eur",
+    "unit_amount": 1500
+  }
+}

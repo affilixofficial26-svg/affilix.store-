@@ -1,0 +1,39 @@
+{
+  "slug": "lead-magnet-starter",
+  "item_type": "lead_magnet",
+  "title": "7 Prompts para arrancar cualquier negocio digital",
+  "short_description": "Recurso gratuito para captar email y ayudar al usuario a definir oferta, publico y primer activo.",
+  "niche": "Captacion",
+  "price_eur": 0,
+  "currency": "EUR",
+  "pages_target": 8,
+  "priority": "alta",
+  "formats": ["pdf"],
+  "status_after_build": "pending_review",
+  "cover": {
+    "provider": "template",
+    "endpoint": "cover-overlay",
+    "aspect": "4:5",
+    "size": "1600x2000",
+    "prompt": "Dark premium AFFILIX starter cover with amber accent, minimal abstract arrow and prompt cards, no external generation required."
+  },
+  "content_plan": {
+    "prompts": [
+      "Encontrar una oportunidad de negocio digital con baja friccion",
+      "Definir avatar de cliente con dolor, deseo y objeciones",
+      "Convertir una habilidad en oferta vendible",
+      "Crear una promesa clara sin exagerar resultados",
+      "Escribir una landing simple de preventa",
+      "Disenar un primer lead magnet",
+      "Plan de 7 dias para conseguir las primeras conversaciones"
+    ],
+    "flow": "Formulario en recursos u home, crear email_subscribers con tag lead-magnet-starter, registrar consentimiento RGPD y entregar PDF con token."
+  },
+  "delivery": {
+    "bucket": "digital-products",
+    "license": "uso_personal",
+    "requires_download_token": true,
+    "requires_payment": false
+  },
+  "stripe": null
+}

@@ -1,0 +1,46 @@
+{
+  "slug": "pack-hooks-shorts-500",
+  "item_type": "digital_product",
+  "title": "500 Hooks para Reels y Shorts",
+  "short_description": "Biblioteca filtrable de hooks cortos para captar atencion en los primeros 2 segundos.",
+  "niche": "Creators",
+  "price_eur": 9,
+  "currency": "EUR",
+  "pages_target": 40,
+  "priority": "media",
+  "formats": ["pdf_navegable", "csv_filtrable", "notion_duplicable"],
+  "status_after_build": "pending_review",
+  "cover": {
+    "provider": "muapi",
+    "endpoint": "flux-dev-image",
+    "aspect": "1:1",
+    "size": "2000x2000",
+    "prompt": "Cover mockup: multiple smartphones showing vertical video content with dynamic wave and motion elements, dark background with amber sparks, energetic composition, square."
+  },
+  "content_plan": {
+    "categories": [
+      "Curiosidad y suspense",
+      "Contradiccion y mito",
+      "Estadistica que impacta",
+      "Pregunta directa",
+      "Confesion personal",
+      "Antes y despues",
+      "Error comun",
+      "Prediccion y futuro",
+      "Comparacion X vs Y",
+      "Lista rapida"
+    ],
+    "hooks_per_category": 50,
+    "hook_generation_brief": "Genera 50 hooks de {categoria} para Reels/Shorts en espanol de Espana. Longitud 5-12 palabras. Deben enganchar en los primeros 2 segundos, aplicarse a varios nichos y evitar clickbait vacio. Formato: uno por linea, sin numeracion."
+  },
+  "delivery": {
+    "bucket": "digital-products",
+    "license": "uso_comercial_personal_y_cliente",
+    "requires_download_token": true
+  },
+  "stripe": {
+    "tax_behavior": "exclusive",
+    "currency": "eur",
+    "unit_amount": 900
+  }
+}
