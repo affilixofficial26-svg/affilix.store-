@@ -2,7 +2,7 @@ import Link from "next/link";
 import {
   AppWindow, ArrowRight, BadgeEuro, BarChart3, Bot, BriefcaseBusiness,
   Check, ChevronDown, CloudDownload, Code2, DownloadCloud,
-  Dumbbell, FileArchive, Film, GitCompareArrows, Globe2, HeartPulse,
+  Dumbbell, FileArchive, Film, GitCompareArrows, HeartPulse,
   Home, ImageIcon, Megaphone, Music2, Palette, Rocket, Search,
   ShoppingBag, Sparkles, Store, Users, WandSparkles, Workflow,
 } from "lucide-react";
