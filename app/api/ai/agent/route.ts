@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getLocalAiConfig } from "@/lib/local-ai-config";
+import { isAiAvailable } from "@/lib/ai/provider";
 import { generateMarketingContent } from "@/lib/marketing/ai-content";
 import { refreshOfferSelection, saveDiscoveredProducts as saveProfitableProducts } from "@/lib/product-automation";
 import { discoverProducts } from "@/lib/product-discovery";
@@ -118,8 +119,8 @@ export async function GET() {
       text_model: localAiConfig.ai_model || null,
       image_provider: localAiConfig.image_provider || null,
       image_model: localAiConfig.image_model || null,
-      has_text_key: Boolean(localAiConfig.ai_api_key || process.env.OPENAI_API_KEY),
-      has_image_key: Boolean(localAiConfig.image_api_key || localAiConfig.ai_api_key || process.env.OPENAI_API_KEY),
+      has_text_key: Boolean(localAiConfig.ai_api_key || isAiAvailable("text")),
+      has_image_key: Boolean(localAiConfig.image_api_key || localAiConfig.ai_api_key || isAiAvailable("image")),
     },
   });
 }

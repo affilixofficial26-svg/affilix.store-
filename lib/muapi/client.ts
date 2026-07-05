@@ -1,7 +1,7 @@
 import { getAdminDb } from "@/lib/supabase";
 import { fetchWithTimeout, requiredEnv, retry } from "@/lib/utils";
 
-export type MuapiCategory = "image" | "video" | "audio" | "enhance" | "edit" | "avatar" | "3d" | "upload";
+export type MuapiCategory = "text" | "image" | "video" | "audio" | "enhance" | "edit" | "avatar" | "3d" | "upload";
 export type MuapiOrigin = "ai_service" | "agent" | "media_studio" | "marketing" | "affiliate_creative" | "manual";
 
 export type MuapiJob = {
@@ -136,6 +136,31 @@ export async function submitJob(params: SubmitParams) {
     });
     throw error;
   }
+}
+
+export async function submitTextJob(params: {
+  prompt: string;
+  model?: string;
+  max_tokens?: number;
+  temperature?: number;
+  origin: MuapiOrigin;
+  refs?: SubmitParams["refs"];
+}) {
+  const endpoint = process.env.MUAPI_TEXT_ENDPOINT || "text-generation";
+  const model = params.model || process.env.MUAPI_TEXT_MODEL || "claude-sonnet-4-6";
+  return submitJob({
+    endpoint,
+    category: "text",
+    origin: params.origin,
+    refs: params.refs,
+    estimated_cost_usd: 0.02,
+    input: {
+      model,
+      prompt: params.prompt,
+      max_tokens: params.max_tokens || 1600,
+      temperature: params.temperature ?? 0.4,
+    },
+  });
 }
 
 export async function getBalance() {
@@ -276,6 +301,10 @@ export async function pollPending(limit = 10) {
 export async function syncModelCatalog() {
   const models = [
     ["flux-dev-image", "image", "Flux Dev", true, false, 0],
+    ["claude-sonnet-4-6", "text", "Claude Sonnet 4.6", false, false, 0],
+    ["gpt-4o-muapi", "text", "GPT-4o via MuAPI", false, false, 0],
+    ["deepseek-chat", "text", "DeepSeek Chat", false, false, 0],
+    ["llama-3.1-70b", "text", "Llama 3.1 70B", false, false, 0],
     ["flux-schnell-image", "image", "Flux Schnell", true, false, 0],
     ["kling-pro-video", "video", "Kling Pro", true, false, 8],
     ["kling-master-video", "video", "Kling Master", true, false, 8],

@@ -107,10 +107,9 @@ export default async function HomePage() {
 
       <section className="hub-section hub-section-alt">
         <SectionHeading eyebrow="Servicios IA" title="Crea servicios profesionales con IA en minutos." copy="Elige lo que necesitas, rellena un formulario y AFFILIX prepara el resultado o deja el pedido listo para revisión y entrega." />
-        <div className="mx-auto grid max-w-7xl gap-4 px-4 sm:grid-cols-2 lg:grid-cols-4 lg:px-6">
-          {aiServices.map(([name, copy, Icon]) => {
-            const real = catalog.services.find((item) => item.title.toLowerCase().includes(name.replace("Crear ", "").toLowerCase()));
-            return <article className="hub-mini-card" key={name}><Icon size={22} className="text-cyan-300" /><h3>{real?.title || name}</h3><p>{real?.short_description || copy}</p>{real ? <Link href={`/s/${real.slug}`}>Empezar <ArrowRight size={14} /></Link> : <span className="hub-status">Próximamente</span>}</article>;
+        <div className="mx-auto grid max-w-7xl gap-4 px-4 sm:grid-cols-2 lg:grid-cols-4 lg:px-6">          {catalog.services.slice(0, 12).map((service, index) => {
+            const Icon = aiServices[index]?.[2] || WandSparkles;
+            return <article className="hub-mini-card" key={service.id}><Icon size={22} className="text-cyan-300" /><h3>{service.title}</h3><p>{service.short_description || service.description}</p><Link href={`/s/${service.slug}`}>Empezar <ArrowRight size={14} /></Link></article>;
           })}
         </div>
         <div className="mt-9 text-center"><Link className="btn btn-primary hub-btn" href="/servicios-ia">Ver todos los servicios IA</Link></div>

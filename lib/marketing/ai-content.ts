@@ -35,7 +35,7 @@ async function getAiConfig(userId: string | null) {
     return {
       ai_provider: (localConfig.ai_provider || "ollama") as AiProvider,
       ai_model: localConfig.ai_model || "qwen2.5:7b",
-      ai_api_key: localConfig.ai_api_key || process.env.OPENAI_API_KEY || null,
+      ai_api_key: localConfig.ai_api_key || process.env.MUAPI_API_KEY || null,
       ollama_base_url: localConfig.ollama_base_url || "http://localhost:11434",
     } satisfies UserAiConfig;
   }

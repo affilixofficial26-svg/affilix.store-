@@ -15,7 +15,7 @@ export default function AgentsPage() {
         emptyTitle="Agentes preparados"
         emptyMessage="Los agentes estan definidos a nivel de panel. Para ejecutar acciones reales falta configurar proveedor IA y permisos seguros."
         agent={{ name: "MasterAgent", status: "pending", description: "Coordina estado general, errores, pedidos pendientes, entregas fallidas y recomendaciones." }}
-        pending={["Configura OPENAI_API_KEY o proveedor IA.", "Define permisos de acciones peligrosas antes de publicar, cobrar o borrar."]}
+        pending={["Define permisos de acciones peligrosas antes de publicar, cobrar o borrar."]}
       />
       <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
         {agents.map((agent) => (

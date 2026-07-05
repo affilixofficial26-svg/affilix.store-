@@ -21,7 +21,7 @@ async function resolveAiConfig(product: AffiliateProduct) {
   const localConfig = await getLocalAiConfig();
   return {
     provider: (localConfig.ai_provider || "ollama") as AiProvider,
-    apiKey: localConfig.ai_api_key || process.env.OPENAI_API_KEY || null,
+    apiKey: localConfig.ai_api_key || process.env.MUAPI_API_KEY || null,
     model: localConfig.ai_model || "qwen2.5:7b",
     ollamaBaseUrl: localConfig.ollama_base_url || "http://localhost:11434",
   };

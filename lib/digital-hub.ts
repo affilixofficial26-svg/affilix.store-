@@ -130,6 +130,30 @@ export async function getDigitalCatalogItem(slug: string) {
   }
 }
 
+export async function getServiceTemplateByCatalogItem(catalogItemId: string) {
+  try {
+    const rows = await getAdminDb().select<{
+      input_schema: Record<string, unknown>;
+      workflow: unknown[];
+      workflow_steps?: unknown[];
+      internal_prompt?: string | null;
+      estimated_minutes?: number | null;
+      estimated_delivery_hours?: number | null;
+      revision_limit?: number | null;
+      included_revisions?: number | null;
+      requires_review?: boolean;
+      requires_human_approval?: boolean;
+    }>("service_templates", {
+      select: "*",
+      catalog_item_id: `eq.${catalogItemId}`,
+      limit: "1",
+    });
+    return rows[0] || null;
+  } catch {
+    return null;
+  }
+}
+
 export async function getLegacyDigitalProductCount() {
   try {
     const products = await getAdminDb().select<{ platform: string }>("affiliate_products", {

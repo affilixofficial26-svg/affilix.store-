@@ -15,6 +15,7 @@ const detailPrefixes: Record<DigitalCatalogItem["item_type"], string> = {
 export function CatalogCard({ item }: { item: DigitalCatalogItem }) {
   const href = `${detailPrefixes[item.item_type]}/${item.slug}`;
   const price = item.price == null ? "Consultar" : new Intl.NumberFormat("es-ES", { style: "currency", currency: item.currency || "EUR" }).format(Number(item.price));
+  const cta = item.item_type === "service_template" ? "Empezar" : "Ver detalle";
   return (
     <article className="group flex h-full flex-col overflow-hidden border border-white/10 bg-[#10141e] transition hover:border-[#38bdf8]/60">
       <Link href={href} className="relative block aspect-[16/10] overflow-hidden bg-[#171c28]">
@@ -32,10 +33,9 @@ export function CatalogCard({ item }: { item: DigitalCatalogItem }) {
         <p className="mt-3 line-clamp-3 text-sm leading-6 text-slate-400">{item.short_description || item.description || "Información completa disponible en la ficha."}</p>
         <div className="mt-auto flex items-center justify-between gap-4 pt-6">
           <span className="text-lg font-black text-white">{price}</span>
-          <Link href={href} className="rounded-md border border-white/15 px-3 py-2 text-sm font-black text-white hover:border-[#38bdf8] hover:text-[#7dd3fc]">Ver detalle</Link>
+          <Link href={href} className="rounded-md border border-white/15 px-3 py-2 text-sm font-black text-white hover:border-[#38bdf8] hover:text-[#7dd3fc]">{cta}</Link>
         </div>
       </div>
     </article>
   );
 }
-

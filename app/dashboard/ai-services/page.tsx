@@ -15,7 +15,7 @@ export default async function AIServicesPage() {
       emptyMessage="Crea una plantilla de servicio con precio, formulario, prompt interno y flujo de revision antes de venderla."
       actions={[{ label: "Crear servicio IA", href: "/dashboard/catalog", kind: "primary" }]}
       agent={{ name: "AIServiceAgent", status: "pending", description: "Ejecuta pedidos, guarda salidas y prepara entregas. No genera resultados hasta tener API key de IA configurada." }}
-      pending={["Configura OPENAI_API_KEY o proveedor IA equivalente.", "Define plantillas de entrada y revision humana para cada servicio."]}
+      pending={["Define plantillas de entrada y revision humana para cada servicio."]}
     />
   );
 }

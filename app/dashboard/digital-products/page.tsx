@@ -15,7 +15,7 @@ export default async function DigitalProductsPage() {
       emptyMessage="Crea el primer PDF, pack, plantilla, ebook o recurso descargable y activa la entrega automatica cuando tengas archivo real."
       actions={[{ label: "Crear producto digital", href: "/dashboard/catalog", kind: "primary" }]}
       agent={{ name: "DigitalProductAgent", status: "pending", description: "Prepara descripcion, SEO, portada y validacion de entrega. Queda pendiente hasta configurar proveedor IA y storage privado." }}
-      pending={["Configura SUPABASE_STORAGE_BUCKET_DIGITAL_ASSETS para archivos privados.", "Configura OPENAI_API_KEY o proveedor IA antes de generar portadas/descripciones."]}
+      pending={["Configura SUPABASE_STORAGE_BUCKET_DIGITAL_ASSETS para archivos privados."]}
     />
   );
 }

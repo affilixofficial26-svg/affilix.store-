@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { HonestEmptyState, PublicShell } from "@/components/digital-hub/PublicShell";
-import { getDigitalCatalogItem } from "@/lib/digital-hub";
+import { getDigitalCatalogItem, getServiceTemplateByCatalogItem } from "@/lib/digital-hub";
 import { BuyButton } from "@/components/checkout/BuyButton";
 
 export async function ItemDetailPage({ slug, expectedType }: { slug: string; expectedType: "product" | "service" | "kit" | "tool" }) {
@@ -18,14 +18,22 @@ export async function ItemDetailPage({ slug, expectedType }: { slug: string; exp
     return (
       <PublicShell>
         <section className="mx-auto max-w-4xl px-4 py-24">
-          <HonestEmptyState title="Contenido no encontrado" message="Este elemento no existe, no está publicado o pertenece a otra sección del Digital Hub." />
+          <HonestEmptyState title="Contenido no encontrado" message="Este elemento no existe, no esta publicado o pertenece a otra seccion del Digital Hub." />
         </section>
       </PublicShell>
     );
   }
 
+  const serviceTemplate = expectedType === "service" ? await getServiceTemplateByCatalogItem(item.id) : null;
+  const schemaEntries = serviceTemplate?.input_schema && typeof serviceTemplate.input_schema === "object"
+    ? Object.entries(serviceTemplate.input_schema).slice(0, 8)
+    : [];
   const price = item.price == null ? "Consultar" : new Intl.NumberFormat("es-ES", { style: "currency", currency: item.currency || "EUR" }).format(Number(item.price));
   const isExternal = item.delivery_type === "external" && item.external_url;
+  const metadata = item.metadata || {};
+  const deliveryHours = String(serviceTemplate?.estimated_delivery_hours ?? metadata.turnaround_hours ?? 24);
+  const revisions = String(serviceTemplate?.included_revisions ?? serviceTemplate?.revision_limit ?? metadata.revisions ?? 1);
+
   return (
     <PublicShell>
       <section className="mx-auto grid max-w-7xl gap-10 px-4 py-14 lg:grid-cols-[1fr_1fr] lg:px-6 lg:py-20">
@@ -37,14 +45,50 @@ export async function ItemDetailPage({ slug, expectedType }: { slug: string; exp
           <h1 className="mt-4 font-display text-4xl font-black leading-tight text-white sm:text-5xl">{item.title}</h1>
           <p className="mt-5 text-base leading-7 text-slate-300">{item.description || item.short_description}</p>
           <div className="mt-7 text-3xl font-black text-white">{price}</div>
+          {serviceTemplate ? (
+            <div className="mt-5 grid gap-2 text-sm text-slate-300 sm:grid-cols-3">
+              <div className="border border-white/10 bg-white/[.03] p-3"><strong className="block text-white">{deliveryHours}h</strong> entrega estimada</div>
+              <div className="border border-white/10 bg-white/[.03] p-3"><strong className="block text-white">{revisions}</strong> revisiones</div>
+              <div className="border border-white/10 bg-white/[.03] p-3"><strong className="block text-white">MuAPI</strong> proveedor IA</div>
+            </div>
+          ) : null}
           {isExternal ? (
             <Link href={item.external_url!} target="_blank" rel="sponsored noreferrer" className="mt-7 w-fit rounded-md bg-[#38bdf8] px-5 py-3 text-sm font-black text-[#04111b] hover:bg-[#7dd3fc]">Ir a la herramienta</Link>
           ) : (
-            item.price != null ? <BuyButton itemId={item.id} /> : <div className="mt-7 border-l-2 border-[#38bdf8] bg-[#10141e] p-4 text-sm leading-6 text-slate-300">Este elemento todavía no tiene un precio configurado.</div>
+            item.price != null ? <BuyButton itemId={item.id} label={expectedType === "service" ? "Comprar y empezar" : "Comprar ahora"} /> : <div className="mt-7 border-l-2 border-[#38bdf8] bg-[#10141e] p-4 text-sm leading-6 text-slate-300">Este elemento todavia no tiene un precio configurado.</div>
           )}
-          {item.affiliate_disclosure ? <p className="mt-5 text-xs leading-5 text-slate-500">Este enlace puede generar una comisión para AFFILIX sin coste adicional para ti.</p> : null}
+          {item.affiliate_disclosure ? <p className="mt-5 text-xs leading-5 text-slate-500">Este enlace puede generar una comision para AFFILIX sin coste adicional para ti.</p> : null}
         </div>
       </section>
+
+      {serviceTemplate ? (
+        <section className="mx-auto grid max-w-7xl gap-6 px-4 pb-16 lg:grid-cols-[1.2fr_.8fr] lg:px-6">
+          <div className="border border-white/10 bg-[#10141e] p-6">
+            <h2 className="font-display text-2xl font-black text-white">Formulario de briefing</h2>
+            <div className="mt-5 grid gap-4 md:grid-cols-2">
+              {schemaEntries.map(([name, config]) => {
+                const field = config as { label?: string; type?: string; required?: boolean };
+                return (
+                  <label key={name} className="text-sm font-bold text-white">
+                    {field.label || name.replaceAll("_", " ")} {field.required ? <span className="text-[#38bdf8]">*</span> : null}
+                    <input className="input mt-2" disabled placeholder={field.type || "text"} />
+                  </label>
+                );
+              })}
+            </div>
+            <p className="mt-4 text-xs leading-5 text-slate-400">El briefing se recoge durante el pedido y queda asociado al workflow del servicio.</p>
+          </div>
+          <div className="border border-white/10 bg-[#10141e] p-6">
+            <h2 className="font-display text-2xl font-black text-white">Que incluye</h2>
+            <ul className="mt-4 space-y-3 text-sm leading-6 text-slate-300">
+              <li>Workflow MuAPI configurado y trazable.</li>
+              <li>Aprobacion humana incluida antes de la entrega final.</li>
+              <li>Entrega digital con token y email.</li>
+              <li>Licencia comercial estandar.</li>
+            </ul>
+          </div>
+        </section>
+      ) : null}
     </PublicShell>
   );
 }

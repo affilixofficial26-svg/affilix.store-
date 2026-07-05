@@ -7,13 +7,12 @@ export default async function AiServicesPage() {
   const catalog = await getDigitalHubCatalog();
   return (
     <CatalogPage
-      eyebrow="Producción asistida"
+      eyebrow="Produccion asistida"
       title="Servicios IA con una entrega clara y un proceso controlado."
-      description="Diseño, vídeo, texto, web, música y marketing organizados como servicios, con datos de entrada, ejecución y entrega."
+      description="Diseno, video, texto, web, musica y marketing organizados como servicios, con datos de entrada, ejecucion y entrega."
       items={catalog.services}
-      emptyTitle="Los servicios IA están en configuración"
-      emptyMessage="Aquí aparecerán únicamente servicios con precio, formulario, flujo de producción y entrega definidos."
+      emptyTitle="Estamos actualizando el catalogo"
+      emptyMessage="Recuperando servicios, vuelve en unos segundos."
     />
   );
 }
-

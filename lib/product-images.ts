@@ -24,7 +24,7 @@ async function resolveProductImageConfig(product: AffiliateProduct) {
   if (!localConfig.image_provider) return null;
   return {
     provider: localConfig.image_provider as ImageProvider,
-    apiKey: localConfig.image_api_key || localConfig.ai_api_key || process.env.OPENAI_API_KEY || null,
+    apiKey: localConfig.image_api_key || localConfig.ai_api_key || process.env.MUAPI_API_KEY || null,
     model: localConfig.image_model || null,
     baseUrl: localConfig.image_base_url || null,
   };
