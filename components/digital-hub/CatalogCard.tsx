@@ -34,7 +34,7 @@ export function CatalogCard({ item }: { item: DigitalCatalogItem }) {
     <article className="group flex h-full flex-col overflow-hidden border border-white/10 bg-[#10141e] transition hover:border-[#38bdf8]/60">
       <Link href={href} className="relative block aspect-[16/10] overflow-hidden bg-[#171c28]">
         {item.image_url ? (
-          <Image src={item.image_url} alt={title} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover transition duration-500 group-hover:scale-105" />
+          <Image src={`/api/catalog-image/${item.id}`} alt={title} fill sizes="(max-width: 768px) 100vw, 33vw" className="object-cover transition duration-500 group-hover:scale-105" />
         ) : (
           <div className="flex h-full items-center justify-center p-8">
             <Image src="/affilix-mark.svg" alt="" width={72} height={72} className="h-16 w-16 opacity-60" />

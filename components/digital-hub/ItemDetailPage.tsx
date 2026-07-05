@@ -51,7 +51,7 @@ export async function ItemDetailPage({ slug, expectedType }: { slug: string; exp
     <PublicShell>
       <section className="mx-auto grid max-w-7xl gap-10 px-4 py-14 lg:grid-cols-[1fr_1fr] lg:px-6 lg:py-20">
         <div className="relative aspect-[4/3] overflow-hidden border border-white/10 bg-[#10141e]">
-          {item.image_url ? <Image src={item.image_url} alt={title} fill priority sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" /> : <div className="flex h-full items-center justify-center"><Image src="/affilix-mark.svg" alt="" width={110} height={110} className="opacity-60" /></div>}
+          {item.image_url ? <Image src={`/api/catalog-image/${item.id}`} alt={title} fill priority sizes="(max-width: 1024px) 100vw, 50vw" className="object-cover" /> : <div className="flex h-full items-center justify-center"><Image src="/affilix-mark.svg" alt="" width={110} height={110} className="opacity-60" /></div>}
         </div>
         <div className="flex flex-col justify-center">
           <div className="text-xs font-black uppercase text-[#38bdf8]">{category}</div>

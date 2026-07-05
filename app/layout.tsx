@@ -21,19 +21,19 @@ const geistMono = localFont({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "https://affilix.store"),
-  title: "AFFILIX — Crea, vende y automatiza productos digitales con IA",
-  description: "Compra productos digitales, genera servicios con IA, accede a kits de negocio y encuentra herramientas SaaS recomendadas para crecer más rápido.",
-  keywords: ["productos digitales", "servicios IA", "herramientas IA", "SaaS", "automatización", "afiliados digitales", "kits de negocio", "prompts", "ebooks", "plantillas", "marketing automático"],
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "https://affilix.es"),
+  title: "AFFILIX - Crea, vende y automatiza productos digitales",
+  description: "Compra productos digitales, encarga servicios creativos, accede a kits de negocio y encuentra herramientas SaaS recomendadas para crecer mas rapido.",
+  keywords: ["productos digitales", "servicios creativos", "herramientas digitales", "SaaS", "automatizacion", "afiliados digitales", "kits de negocio", "prompts", "ebooks", "plantillas", "marketing automatico"],
   openGraph: {
-    title: "AFFILIX — Crea, vende y automatiza productos digitales con IA",
-    description: "Compra productos digitales, genera servicios con IA, accede a kits de negocio y encuentra herramientas SaaS recomendadas.",
+    title: "AFFILIX - Crea, vende y automatiza productos digitales",
+    description: "Compra productos digitales, encarga servicios creativos, accede a kits de negocio y encuentra herramientas SaaS recomendadas.",
     images: ["/brand/social/og-affilix.png"],
   },
   twitter: {
     card: "summary_large_image",
-    title: "AFFILIX Digital Hub",
-    description: "Crea, vende y automatiza productos digitales con IA.",
+    title: "AFFILIX",
+    description: "Crea, vende y automatiza productos digitales.",
     images: ["/brand/social/twitter-card-affilix.png"],
   },
   icons: {
